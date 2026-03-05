@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Antes / Después</title>
+<style>
+  html, body { margin:0; padding:0; background:transparent; }
+  body { font-family: Arial, sans-serif; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; }
+
+  .box{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    border-radius:14px;
+
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+    cursor: ew-resize;
+
+    /* posición del divisor */
+    --pos: 50%;
+  }
+
+  /* Ambas capas a tamaño FIJO (no cambian cuando arrastras) */
+  .layer{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+  }
+
+  .after { background-image: url("despues.jpg"); }
+
+  .before {
+    background-image: url("antes.jpg");
+    /* Solo se RECORTA (no se reescala) => cero “deformación” */
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+
+  .handle{
+    position:absolute;
+    top:0; bottom:0;
+    left: var(--pos);
+    width:0;
+    pointer-events:none;
+  }
+  .line{
+    position:absolute;
+    top:0; bottom:0;
+    left:-2px;
+    width:4px;
+    background:#fff;
+  }
+  .knob{
+    position:absolute;
+    top:50%;
+    left:-18px;
+    transform:translateY(-50%);
+    width:36px;height:36px;border-radius:999px;background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .knob:before{ content:"↔"; font-size:18px; color:#111; }
+
+  .tag{
+    position:absolute;top:12px;padding:8px 12px;border-radius:999px;
+    background:rgba(0,0,0,.55);color:#fff;font-weight:700;font-size:12px;
+    letter-spacing:.6px;text-transform:uppercase;
+  }
+  .tag.left{ left:12px; }
+  .tag.right{ right:12px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="box" id="box">
+      <div class="layer after"></div>
+      <div class="layer before"></div>
+
+      <div class="tag left">Antes</div>
+      <div class="tag right">Después</div>
+
+      <div class="handle" id="handle">
+        <div class="line"></div>
+        <div class="knob"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const box = document.getElementById("box");
+  let dragging = false;
+
+  function setPos(clientX){
+    const rect = box.getBoundingClientRect();
+    let x = (clientX - rect.left) / rect.width;
+    if (x < 0) x = 0;
+    if (x > 1) x = 1;
+    box.style.setProperty("--pos", (x * 100).toFixed(2) + "%");
+  }
+
+  window.addEventListener("load", () => {
+    const r = box.getBoundingClientRect();
+    setPos(r.left + r.width/2);
+  });
+
+  ["dragstart","selectstart"].forEach(evt => box.addEventListener(evt, e => e.preventDefault()));
+
+  box.addEventListener("mousedown", (e)=>{ e.preventDefault(); dragging = true; setPos(e.clientX); });
+  window.addEventListener("mouseup", ()=> dragging = false);
+  window.addEventListener("mousemove",(e)=>{ if(!dragging) return; e.preventDefault(); setPos(e.clientX); });
+
+  box.addEventListener("touchstart",(e)=>{ dragging = true; setPos(e.touches[0].clientX); }, {passive:false});
+  window.addEventListener("touchend", ()=> dragging = false, {passive:true});
+  window.addEventListener("touchmove",(e)=>{ if(!dragging) return; e.preventDefault(); setPos(e.touches[0].clientX); }, {passive:false});
+</script>
+</body>
+</html>
