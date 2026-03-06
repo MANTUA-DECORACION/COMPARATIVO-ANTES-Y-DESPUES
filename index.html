@@ -1,614 +1,414 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparativos Antes y Después | Mantua Decoración</title>
-  <style>
-    :root{
-      --bg:#f7f7f8;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --accent:#9f1239;
-      --accent-soft:#fdf2f8;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    *{box-sizing:border-box}
+<title>Comparativos Antes y Después | Mantua Decoración</title>
 
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
+<style>
 
-    .wrap{
-      width:min(1240px, 92%);
-      margin:0 auto;
-    }
+:root{
+--bg:#f7f7f8;
+--card:#ffffff;
+--text:#1f2937;
+--muted:#6b7280;
+--line:#e5e7eb;
+--accent:#9f1239;
+--accent-soft:#fdf2f8;
+--shadow:0 10px 30px rgba(0,0,0,.08);
+--radius:22px;
+}
 
-    header{
-      padding:42px 0 18px;
-      text-align:center;
-    }
+*{box-sizing:border-box}
 
-    h1{
-      margin:0;
-      font-size:clamp(2rem, 4vw, 3rem);
-      line-height:1.1;
-    }
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:var(--bg);
+color:var(--text);
+}
 
-    .sub{
-      margin:14px auto 0;
-      color:var(--muted);
-      font-size:1.08rem;
-      max-width:760px;
-    }
+.wrap{
+width:min(1280px,92%);
+margin:auto;
+}
 
-    .status{
-      margin:24px auto 34px;
-      padding:18px 20px;
-      border-radius:16px;
-      background:#fff;
-      border:1px solid var(--line);
-      color:var(--muted);
-      box-shadow:var(--shadow);
-    }
+header{
+text-align:center;
+padding:40px 0 20px;
+}
 
-    .status.error{
-      background:#fef2f2;
-      border-color:#fecaca;
-      color:#991b1b;
-    }
+h1{
+margin:0;
+font-size:clamp(2rem,4vw,3rem);
+}
 
-    .status.ok{
-      background:#f0fdf4;
-      border-color:#bbf7d0;
-      color:#166534;
-    }
+.sub{
+color:var(--muted);
+margin-top:10px;
+}
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-      margin:0 0 24px;
-    }
+.status{
+margin:20px 0;
+padding:16px;
+border-radius:14px;
+background:#fff;
+border:1px solid var(--line);
+}
 
-    .back-link{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:700;
-    }
+.status.ok{
+background:#f0fdf4;
+border-color:#bbf7d0;
+color:#166534;
+}
 
-    .category-block{
-      margin:40px 0 52px;
-    }
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:25px;
+}
 
-    .category-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:18px;
-      flex-wrap:wrap;
-    }
+.chip{
+padding:8px 14px;
+border-radius:999px;
+border:1px solid var(--line);
+background:#fff;
+text-decoration:none;
+font-weight:700;
+color:var(--text);
+}
 
-    .category-title{
-      margin:0;
-      font-size:1.7rem;
-      text-transform:capitalize;
-    }
+.category-block{
+margin:40px 0;
+}
 
-    .category-badge{
-      padding:8px 12px;
-      background:var(--accent-soft);
-      color:var(--accent);
-      border-radius:999px;
-      font-size:.95rem;
-      font-weight:700;
-    }
+.category-title{
+font-size:1.6rem;
+margin-bottom:15px;
+text-transform:capitalize;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
-      gap:22px;
-    }
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+gap:22px;
+}
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
+.card{
+background:#fff;
+border:1px solid var(--line);
+border-radius:20px;
+overflow:hidden;
+box-shadow:var(--shadow);
+}
 
-    .viewer{
-      position:relative;
-      width:100%;
-      aspect-ratio: 16 / 10;
-      overflow:hidden;
-      background:#e5e7eb;
-      user-select:none;
-      touch-action:none;
-      cursor:ew-resize;
-    }
+.viewer{
+position:relative;
+width:100%;
+aspect-ratio:16/10;
+overflow:hidden;
+cursor:ew-resize;
+touch-action:none;
+}
 
-    .viewer img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      pointer-events:none;
-      user-select:none;
-      -webkit-user-drag:none;
-    }
+.before-layer,
+.after-layer{
+position:absolute;
+inset:0;
+}
 
-    .after-wrap{
-      position:absolute;
-      inset:0;
-      width:50%;
-      overflow:hidden;
-    }
+.viewer img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
 
-    .after-wrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
+.after-layer{
+clip-path:inset(0 0 0 50%);
+}
 
-    .divider{
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:50%;
-      width:0;
-      pointer-events:none;
-      z-index:4;
-    }
+.divider{
+position:absolute;
+top:0;
+bottom:0;
+left:50%;
+width:0;
+pointer-events:none;
+}
 
-    .divider::before{
-      content:"";
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:-1.5px;
-      width:3px;
-      background:#fff;
-      box-shadow:0 0 10px rgba(0,0,0,.22);
-    }
+.divider::before{
+content:"";
+position:absolute;
+left:-1.5px;
+top:0;
+bottom:0;
+width:3px;
+background:#fff;
+}
 
-    .handle{
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%, -50%);
-      width:54px;
-      height:54px;
-      border-radius:50%;
-      background:#fff;
-      display:grid;
-      place-items:center;
-      font-size:24px;
-      box-shadow:0 8px 20px rgba(0,0,0,.18);
-      color:#111827;
-      font-weight:700;
-    }
+.handle{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:56px;
+height:56px;
+border-radius:50%;
+background:#fff;
+display:grid;
+place-items:center;
+font-size:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
 
-    .label{
-      position:absolute;
-      top:14px;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:.85rem;
-      font-weight:700;
-      background:rgba(17,24,39,.72);
-      color:#fff;
-      backdrop-filter:blur(6px);
-      z-index:5;
-    }
+.label{
+position:absolute;
+top:12px;
+padding:6px 10px;
+background:rgba(0,0,0,.7);
+color:#fff;
+border-radius:20px;
+font-size:.8rem;
+}
 
-    .label.before{ left:14px; }
-    .label.after{ right:14px; }
+.label.before{left:12px}
+.label.after{right:12px}
 
-    .content{
-      padding:18px 18px 18px;
-    }
+.content{
+padding:16px;
+}
 
-    .project-title{
-      margin:0 0 8px;
-      font-size:1.15rem;
-      text-transform:capitalize;
-    }
+.project-title{
+font-weight:700;
+margin-bottom:10px;
+}
 
-    .project-meta{
-      margin:0 0 12px;
-      color:var(--muted);
-      font-size:.93rem;
-      word-break:break-word;
-    }
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+.btn{
+padding:8px 14px;
+border-radius:10px;
+border:1px solid var(--line);
+background:#fff;
+text-decoration:none;
+font-weight:700;
+color:#111;
+}
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 14px;
-      border-radius:12px;
-      text-decoration:none;
-      font-weight:700;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
-    }
+.btn.primary{
+background:var(--accent);
+color:#fff;
+border-color:var(--accent);
+}
 
-    .btn.primary{
-      background:var(--accent);
-      border-color:var(--accent);
-      color:#fff;
-    }
+body.embed-mode header,
+body.embed-mode .filters,
+body.embed-mode .status,
+body.embed-mode footer,
+body.embed-mode .content{
+display:none;
+}
 
-    .single-view{
-      max-width:1080px;
-      margin:0 auto 50px;
-    }
-
-    .single-view .card{
-      overflow:visible;
-    }
-
-    .single-view .viewer{
-      border-radius:20px 20px 0 0;
-    }
-
-    .empty{
-      padding:30px 18px;
-      border:1px dashed #d1d5db;
-      border-radius:18px;
-      color:var(--muted);
-      background:#fff;
-    }
-
-    footer{
-      padding:20px 0 48px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.95rem;
-    }
-
-    @media (max-width:640px){
-      .grid{
-        grid-template-columns:1fr;
-      }
-      .handle{
-        width:48px;
-        height:48px;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Comparativos Antes y Después</h1>
-      <p class="sub">Portafolio visual organizado automáticamente por producto y proyecto.</p>
-    </header>
 
-    <div id="status" class="status">Cargando proyectos...</div>
-    <div id="topbar" class="topbar" style="display:none;"></div>
-    <main id="app"></main>
+<div class="wrap">
 
-    <footer>
-      Mantua Decoración · Comparativos automáticos
-    </footer>
-  </div>
+<header>
+<h1>Comparativos Antes y Después</h1>
+<p class="sub">Portafolio visual organizado automáticamente por producto.</p>
+</header>
 
-  <script>
-    const GITHUB_USER = "MANTUA-DECORACION";
-    const GITHUB_REPO = "COMPARATIVO-ANTES-Y-DESPUES";
-    const GITHUB_BRANCH = "main";
-    const ROOT_FOLDER = "proyectos";
+<div id="status" class="status">Cargando proyectos...</div>
+<div id="filters" class="filters"></div>
+<main id="app"></main>
 
-    const statusEl = document.getElementById("status");
-    const topbarEl = document.getElementById("topbar");
-    const app = document.getElementById("app");
+</div>
 
-    function setStatus(message, type = "") {
-      statusEl.className = "status" + (type ? " " + type : "");
-      statusEl.innerHTML = message;
-    }
+<script>
 
-    function prettifyName(name) {
-      return name
-        .replace(/[-_]+/g, " ")
-        .replace(/\b\w/g, c => c.toUpperCase());
-    }
+const USER="MANTUA-DECORACION"
+const REPO="COMPARATIVO-ANTES-Y-DESPUES"
+const BRANCH="main"
+const ROOT="proyectos"
 
-    function isImage(fileName) {
-      return /\.(jpg|jpeg|png|webp|avif)$/i.test(fileName);
-    }
+const statusEl=document.getElementById("status")
+const filtersEl=document.getElementById("filters")
+const app=document.getElementById("app")
 
-    function rawUrl(path) {
-      return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
-    }
+function raw(path){
+return`https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/${path}`
+}
 
-    async function fetchContents(path) {
-      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`No se pudo leer: ${path}`);
-      return await res.json();
-    }
+function fetchDir(path){
+return fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${path}?ref=${BRANCH}`).then(r=>r.json())
+}
 
-    function getProjectLink(category, project) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("cat", category);
-      url.searchParams.set("proyecto", project);
-      return url.toString();
-    }
+function prettify(t){
+return t.replace(/[-_]/g," ").replace(/\b\w/g,l=>l.toUpperCase())
+}
 
-    function initTouchCompare(viewer, initialPercent = 50) {
-      const afterWrap = viewer.querySelector(".after-wrap");
-      const divider = viewer.querySelector(".divider");
+function getProjectLink(cat,proj){
+return`${location.pathname}?cat=${cat}&proyecto=${proj}`
+}
 
-      function setPercent(percent) {
-        const safe = Math.max(0, Math.min(100, percent));
-        afterWrap.style.width = safe + "%";
-        divider.style.left = safe + "%";
-      }
+function getEmbedLink(cat,proj){
+return`${location.pathname}?cat=${cat}&proyecto=${proj}&embed=1`
+}
 
-      function updateFromClientX(clientX) {
-        const rect = viewer.getBoundingClientRect();
-        const x = clientX - rect.left;
-        const percent = (x / rect.width) * 100;
-        setPercent(percent);
-      }
+function initCompare(viewer){
 
-      let dragging = false;
+const after=viewer.querySelector(".after-layer")
+const divider=viewer.querySelector(".divider")
 
-      const startDrag = (clientX) => {
-        dragging = true;
-        updateFromClientX(clientX);
-      };
+function set(p){
+p=Math.max(0,Math.min(100,p))
+after.style.clipPath=`inset(0 0 0 ${p}%)`
+divider.style.left=p+"%"
+}
 
-      const moveDrag = (clientX) => {
-        if (!dragging) return;
-        updateFromClientX(clientX);
-      };
+viewer.addEventListener("pointerdown",e=>{
+viewer.setPointerCapture(e.pointerId)
+move(e)
+})
 
-      const endDrag = () => {
-        dragging = false;
-      };
+viewer.addEventListener("pointermove",e=>{
+if(e.buttons) move(e)
+})
 
-      viewer.addEventListener("pointerdown", (e) => {
-        startDrag(e.clientX);
-        viewer.setPointerCapture(e.pointerId);
-      });
+function move(e){
+const rect=viewer.getBoundingClientRect()
+const x=e.clientX-rect.left
+set(x/rect.width*100)
+}
 
-      viewer.addEventListener("pointermove", (e) => {
-        moveDrag(e.clientX);
-      });
+set(50)
 
-      viewer.addEventListener("pointerup", endDrag);
-      viewer.addEventListener("pointercancel", endDrag);
-      viewer.addEventListener("pointerleave", () => {});
+}
 
-      setPercent(initialPercent);
-    }
+function createCard(cat,proj,before,after,embed=false){
 
-    function createCard(categoryName, projectName, beforeSrc, afterSrc, projectPath, single = false) {
-      const card = document.createElement("article");
-      card.className = "card";
+const card=document.createElement("div")
+card.className="card"
 
-      const projectLink = getProjectLink(categoryName, projectName);
+if(embed){
+card.innerHTML=`
+<div class="viewer">
+<div class="before-layer"><img src="${before}"></div>
+<div class="after-layer"><img src="${after}"></div>
+<div class="divider"><div class="handle">↔</div></div>
+<div class="label before">Antes</div>
+<div class="label after">Después</div>
+</div>
+`
+}else{
+card.innerHTML=`
+<div class="viewer">
+<div class="before-layer"><img src="${before}"></div>
+<div class="after-layer"><img src="${after}"></div>
+<div class="divider"><div class="handle">↔</div></div>
+<div class="label before">Antes</div>
+<div class="label after">Después</div>
+</div>
 
-      card.innerHTML = `
-        <div class="viewer">
-          <img src="${beforeSrc}" alt="Antes de ${projectName}" loading="lazy">
-          <div class="after-wrap">
-            <img src="${afterSrc}" alt="Después de ${projectName}" loading="lazy">
-          </div>
-          <div class="divider">
-            <div class="handle">↔</div>
-          </div>
-          <div class="label before">Antes</div>
-          <div class="label after">Después</div>
-        </div>
+<div class="content">
+<div class="project-title">${prettify(proj)}</div>
+<div class="actions">
+<a class="btn primary" href="${getProjectLink(cat,proj)}">Ver comparativo</a>
+<a class="btn" href="${getEmbedLink(cat,proj)}">Link incrustar</a>
+</div>
+</div>
+`
+}
 
-        <div class="content">
-          <h3 class="project-title">${prettifyName(projectName)}</h3>
-          <p class="project-meta">${prettifyName(categoryName)} · ${projectPath}</p>
-          <div class="actions">
-            ${single
-              ? `<a class="btn" href="${window.location.pathname}">← Volver a todos</a>`
-              : `<a class="btn primary" href="${projectLink}">Ver link individual</a>`
-            }
-          </div>
-        </div>
-      `;
+initCompare(card.querySelector(".viewer"))
+return card
 
-      initTouchCompare(card.querySelector(".viewer"), 50);
-      return card;
-    }
+}
 
-    async function getAllProjects() {
-      const rootItems = await fetchContents(ROOT_FOLDER);
-      const categories = rootItems.filter(item => item.type === "dir");
+async function load(){
 
-      const data = [];
+const params=new URLSearchParams(location.search)
+const cat=params.get("cat")
+const proj=params.get("proyecto")
+const embed=params.get("embed")
 
-      for (const category of categories) {
-        const categoryPath = `${ROOT_FOLDER}/${category.name}`;
-        const categoryItems = await fetchContents(categoryPath);
-        const projectFolders = categoryItems.filter(item => item.type === "dir");
+if(embed) document.body.classList.add("embed-mode")
 
-        const categoryData = {
-          name: category.name,
-          projects: []
-        };
+const root=await fetchDir(ROOT)
 
-        for (const project of projectFolders) {
-          const projectPath = `${categoryPath}/${project.name}`;
-          const files = await fetchContents(projectPath);
+const cats=root.filter(i=>i.type==="dir")
 
-          const imageFiles = files
-            .filter(file => file.type === "file" && isImage(file.name))
-            .sort((a, b) => a.name.localeCompare(b.name, "es", { numeric: true, sensitivity: "base" }));
+if(cat && proj){
 
-          if (imageFiles.length < 2) continue;
+const files=await fetchDir(`${ROOT}/${cat}/${proj}`)
 
-          categoryData.projects.push({
-            name: project.name,
-            path: `${category.name}/${project.name}`,
-            beforeSrc: rawUrl(imageFiles[0].path),
-            afterSrc: rawUrl(imageFiles[1].path)
-          });
-        }
+const imgs=files.filter(f=>/\.(jpg|png|jpeg|webp)/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name))
 
-        data.push(categoryData);
-      }
+const before=raw(imgs[0].path)
+const after=raw(imgs[1].path)
 
-      return data;
-    }
+const card=createCard(cat,proj,before,after,true)
+app.appendChild(card)
 
-    function renderTopbarSingle(category, project) {
-      topbarEl.style.display = "flex";
-      topbarEl.innerHTML = `
-        <a class="back-link" href="${window.location.pathname}">← Volver al portafolio</a>
-        <div>${prettifyName(category)} / ${prettifyName(project)}</div>
-      `;
-    }
+statusEl.style.display="none"
 
-    async function loadProjects() {
-      try {
-        setStatus("Cargando categorías y proyectos...");
-        app.innerHTML = "";
-        topbarEl.style.display = "none";
-        topbarEl.innerHTML = "";
+return
+}
 
-        const params = new URLSearchParams(window.location.search);
-        const selectedCategory = params.get("cat");
-        const selectedProject = params.get("proyecto");
+for(const c of cats){
 
-        const categories = await getAllProjects();
+const section=document.createElement("div")
+section.className="category-block"
 
-        const totalProjects = categories.reduce((sum, c) => sum + c.projects.length, 0);
+const title=document.createElement("div")
+title.className="category-title"
+title.textContent=prettify(c.name)
 
-        if (!categories.length || totalProjects === 0) {
-          setStatus(
-            `No se encontraron proyectos válidos. Cada carpeta interna debe tener al menos <strong>2 imágenes</strong>.`,
-            "error"
-          );
-          return;
-        }
+section.appendChild(title)
 
-        if (selectedCategory && selectedProject) {
-          const category = categories.find(c => c.name === selectedCategory);
-          const project = category?.projects.find(p => p.name === selectedProject);
+const grid=document.createElement("div")
+grid.className="grid"
 
-          if (!category || !project) {
-            setStatus("No se encontró el proyecto solicitado.", "error");
-            return;
-          }
+const projects=await fetchDir(`${ROOT}/${c.name}`)
 
-          renderTopbarSingle(category.name, project.name);
+for(const p of projects.filter(i=>i.type==="dir")){
 
-          const wrap = document.createElement("section");
-          wrap.className = "single-view";
-          wrap.appendChild(
-            createCard(
-              category.name,
-              project.name,
-              project.beforeSrc,
-              project.afterSrc,
-              project.path,
-              true
-            )
-          );
+const files=await fetchDir(`${ROOT}/${c.name}/${p.name}`)
 
-          app.appendChild(wrap);
-          setStatus(`Link individual cargado correctamente.`, "ok");
-          return;
-        }
+const imgs=files.filter(f=>/\.(jpg|png|jpeg|webp)/i.test(f.name)).sort((a,b)=>a.name.localeCompare(b.name))
 
-        let shownCategories = 0;
+if(imgs.length<2) continue
 
-        for (const category of categories) {
-          const section = document.createElement("section");
-          section.className = "category-block";
+const before=raw(imgs[0].path)
+const after=raw(imgs[1].path)
 
-          const head = document.createElement("div");
-          head.className = "category-head";
+grid.appendChild(createCard(c.name,p.name,before,after))
 
-          const title = document.createElement("h2");
-          title.className = "category-title";
-          title.textContent = prettifyName(category.name);
+}
 
-          const badge = document.createElement("div");
-          badge.className = "category-badge";
-          badge.textContent = `${category.projects.length} proyecto${category.projects.length === 1 ? "" : "s"}`;
+section.appendChild(grid)
+app.appendChild(section)
 
-          head.appendChild(title);
-          head.appendChild(badge);
-          section.appendChild(head);
+}
 
-          if (!category.projects.length) {
-            const empty = document.createElement("div");
-            empty.className = "empty";
-            empty.innerHTML = `No se encontraron proyectos válidos en esta categoría.`;
-            section.appendChild(empty);
-          } else {
-            const grid = document.createElement("div");
-            grid.className = "grid";
+statusEl.textContent="Proyectos cargados correctamente."
 
-            for (const project of category.projects) {
-              grid.appendChild(
-                createCard(
-                  category.name,
-                  project.name,
-                  project.beforeSrc,
-                  project.afterSrc,
-                  project.path
-                )
-              );
-            }
+}
 
-            section.appendChild(grid);
-            shownCategories++;
-          }
+load()
 
-          app.appendChild(section);
-        }
+</script>
 
-        setStatus(
-          `Se cargaron correctamente <strong>${totalProjects}</strong> proyecto(s) en <strong>${shownCategories}</strong> categoría(s).`,
-          "ok"
-        );
-      } catch (error) {
-        console.error(error);
-        setStatus(
-          `Error al cargar los proyectos.<br>
-          Revisa que exista la carpeta <strong>${ROOT_FOLDER}</strong>, que el repositorio sea público y que GitHub Pages esté activo.`,
-          "error"
-        );
-      }
-    }
-
-    loadProjects();
-  </script>
 </body>
 </html>
