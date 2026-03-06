@@ -27,12 +27,12 @@
     }
 
     .wrap{
-      width:min(1200px, 92%);
+      width:min(1240px, 92%);
       margin:0 auto;
     }
 
     header{
-      padding:48px 0 24px;
+      padding:42px 0 18px;
       text-align:center;
     }
 
@@ -50,7 +50,7 @@
     }
 
     .status{
-      margin:28px auto 36px;
+      margin:24px auto 34px;
       padding:18px 20px;
       border-radius:16px;
       background:#fff;
@@ -71,8 +71,26 @@
       color:#166534;
     }
 
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin:0 0 24px;
+    }
+
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      color:var(--accent);
+      font-weight:700;
+    }
+
     .category-block{
-      margin:42px 0 52px;
+      margin:40px 0 52px;
     }
 
     .category-head{
@@ -101,7 +119,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
       gap:22px;
     }
 
@@ -116,10 +134,12 @@
     .viewer{
       position:relative;
       width:100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
       overflow:hidden;
       background:#e5e7eb;
       user-select:none;
+      touch-action:none;
+      cursor:ew-resize;
     }
 
     .viewer img{
@@ -130,6 +150,8 @@
       object-fit:cover;
       display:block;
       pointer-events:none;
+      user-select:none;
+      -webkit-user-drag:none;
     }
 
     .after-wrap{
@@ -137,8 +159,12 @@
       inset:0;
       width:50%;
       overflow:hidden;
-      border-right:3px solid #fff;
-      box-shadow:2px 0 8px rgba(0,0,0,.15);
+    }
+
+    .after-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
     .divider{
@@ -148,6 +174,7 @@
       left:50%;
       width:0;
       pointer-events:none;
+      z-index:4;
     }
 
     .divider::before{
@@ -158,24 +185,23 @@
       left:-1.5px;
       width:3px;
       background:#fff;
-      box-shadow:0 0 10px rgba(0,0,0,.2);
+      box-shadow:0 0 10px rgba(0,0,0,.22);
     }
 
-    .divider::after{
-      content:"↔";
+    .handle{
       position:absolute;
       top:50%;
       left:50%;
       transform:translate(-50%, -50%);
-      width:44px;
-      height:44px;
+      width:54px;
+      height:54px;
       border-radius:50%;
       background:#fff;
-      color:#111827;
       display:grid;
       place-items:center;
-      font-size:20px;
+      font-size:24px;
       box-shadow:0 8px 20px rgba(0,0,0,.18);
+      color:#111827;
       font-weight:700;
     }
 
@@ -189,33 +215,65 @@
       background:rgba(17,24,39,.72);
       color:#fff;
       backdrop-filter:blur(6px);
-      z-index:3;
+      z-index:5;
     }
 
     .label.before{ left:14px; }
     .label.after{ right:14px; }
 
-    .slider{
-      width:calc(100% - 28px);
-      margin:14px;
-      accent-color:var(--accent);
-    }
-
     .content{
-      padding:0 18px 18px;
+      padding:18px 18px 18px;
     }
 
     .project-title{
-      margin:4px 0 8px;
+      margin:0 0 8px;
       font-size:1.15rem;
       text-transform:capitalize;
     }
 
-    .project-path{
-      margin:0;
+    .project-meta{
+      margin:0 0 12px;
       color:var(--muted);
       font-size:.93rem;
       word-break:break-word;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+    }
+
+    .btn.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+
+    .single-view{
+      max-width:1080px;
+      margin:0 auto 50px;
+    }
+
+    .single-view .card{
+      overflow:visible;
+    }
+
+    .single-view .viewer{
+      border-radius:20px 20px 0 0;
     }
 
     .empty{
@@ -227,24 +285,19 @@
     }
 
     footer{
-      padding:30px 0 50px;
+      padding:20px 0 48px;
       text-align:center;
       color:var(--muted);
       font-size:.95rem;
     }
 
-    .tips{
-      margin:10px 0 0;
-      font-size:.92rem;
-      color:var(--muted);
-      max-width:860px;
-      margin-inline:auto;
-      line-height:1.5;
-    }
-
     @media (max-width:640px){
       .grid{
         grid-template-columns:1fr;
+      }
+      .handle{
+        width:48px;
+        height:48px;
       }
     }
   </style>
@@ -253,20 +306,15 @@
   <div class="wrap">
     <header>
       <h1>Comparativos Antes y Después</h1>
-      <p class="sub">
-        Portafolio visual organizado automáticamente por categoría y carpeta.
-      </p>
+      <p class="sub">Portafolio visual organizado automáticamente por producto y proyecto.</p>
     </header>
 
     <div id="status" class="status">Cargando proyectos...</div>
+    <div id="topbar" class="topbar" style="display:none;"></div>
     <main id="app"></main>
 
     <footer>
       Mantua Decoración · Comparativos automáticos
-      <div class="tips">
-        Solo crea carpetas dentro de <strong>proyectos</strong>. Cada carpeta de proyecto debe contener
-        <strong>2 imágenes</strong> con cualquier nombre. La primera se mostrará como <strong>Antes</strong> y la segunda como <strong>Después</strong>.
-      </div>
     </footer>
   </div>
 
@@ -277,6 +325,7 @@
     const ROOT_FOLDER = "proyectos";
 
     const statusEl = document.getElementById("status");
+    const topbarEl = document.getElementById("topbar");
     const app = document.getElementById("app");
 
     function setStatus(message, type = "") {
@@ -305,9 +354,67 @@
       return await res.json();
     }
 
-    function createCard(categoryName, projectName, beforeSrc, afterSrc, projectPath) {
+    function getProjectLink(category, project) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("cat", category);
+      url.searchParams.set("proyecto", project);
+      return url.toString();
+    }
+
+    function initTouchCompare(viewer, initialPercent = 50) {
+      const afterWrap = viewer.querySelector(".after-wrap");
+      const divider = viewer.querySelector(".divider");
+
+      function setPercent(percent) {
+        const safe = Math.max(0, Math.min(100, percent));
+        afterWrap.style.width = safe + "%";
+        divider.style.left = safe + "%";
+      }
+
+      function updateFromClientX(clientX) {
+        const rect = viewer.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const percent = (x / rect.width) * 100;
+        setPercent(percent);
+      }
+
+      let dragging = false;
+
+      const startDrag = (clientX) => {
+        dragging = true;
+        updateFromClientX(clientX);
+      };
+
+      const moveDrag = (clientX) => {
+        if (!dragging) return;
+        updateFromClientX(clientX);
+      };
+
+      const endDrag = () => {
+        dragging = false;
+      };
+
+      viewer.addEventListener("pointerdown", (e) => {
+        startDrag(e.clientX);
+        viewer.setPointerCapture(e.pointerId);
+      });
+
+      viewer.addEventListener("pointermove", (e) => {
+        moveDrag(e.clientX);
+      });
+
+      viewer.addEventListener("pointerup", endDrag);
+      viewer.addEventListener("pointercancel", endDrag);
+      viewer.addEventListener("pointerleave", () => {});
+
+      setPercent(initialPercent);
+    }
+
+    function createCard(categoryName, projectName, beforeSrc, afterSrc, projectPath, single = false) {
       const card = document.createElement("article");
       card.className = "card";
+
+      const projectLink = getProjectLink(categoryName, projectName);
 
       card.innerHTML = `
         <div class="viewer">
@@ -315,55 +422,132 @@
           <div class="after-wrap">
             <img src="${afterSrc}" alt="Después de ${projectName}" loading="lazy">
           </div>
-          <div class="divider"></div>
+          <div class="divider">
+            <div class="handle">↔</div>
+          </div>
           <div class="label before">Antes</div>
           <div class="label after">Después</div>
         </div>
 
-        <input class="slider" type="range" min="0" max="100" value="50" aria-label="Comparador antes y después">
-
         <div class="content">
           <h3 class="project-title">${prettifyName(projectName)}</h3>
-          <p class="project-path">${prettifyName(categoryName)} · ${projectPath}</p>
+          <p class="project-meta">${prettifyName(categoryName)} · ${projectPath}</p>
+          <div class="actions">
+            ${single
+              ? `<a class="btn" href="${window.location.pathname}">← Volver a todos</a>`
+              : `<a class="btn primary" href="${projectLink}">Ver link individual</a>`
+            }
+          </div>
         </div>
       `;
 
-      const slider = card.querySelector(".slider");
-      const afterWrap = card.querySelector(".after-wrap");
-      const divider = card.querySelector(".divider");
+      initTouchCompare(card.querySelector(".viewer"), 50);
+      return card;
+    }
 
-      function updateSlider(value) {
-        afterWrap.style.width = value + "%";
-        divider.style.left = value + "%";
+    async function getAllProjects() {
+      const rootItems = await fetchContents(ROOT_FOLDER);
+      const categories = rootItems.filter(item => item.type === "dir");
+
+      const data = [];
+
+      for (const category of categories) {
+        const categoryPath = `${ROOT_FOLDER}/${category.name}`;
+        const categoryItems = await fetchContents(categoryPath);
+        const projectFolders = categoryItems.filter(item => item.type === "dir");
+
+        const categoryData = {
+          name: category.name,
+          projects: []
+        };
+
+        for (const project of projectFolders) {
+          const projectPath = `${categoryPath}/${project.name}`;
+          const files = await fetchContents(projectPath);
+
+          const imageFiles = files
+            .filter(file => file.type === "file" && isImage(file.name))
+            .sort((a, b) => a.name.localeCompare(b.name, "es", { numeric: true, sensitivity: "base" }));
+
+          if (imageFiles.length < 2) continue;
+
+          categoryData.projects.push({
+            name: project.name,
+            path: `${category.name}/${project.name}`,
+            beforeSrc: rawUrl(imageFiles[0].path),
+            afterSrc: rawUrl(imageFiles[1].path)
+          });
+        }
+
+        data.push(categoryData);
       }
 
-      slider.addEventListener("input", e => updateSlider(e.target.value));
-      updateSlider(50);
+      return data;
+    }
 
-      return card;
+    function renderTopbarSingle(category, project) {
+      topbarEl.style.display = "flex";
+      topbarEl.innerHTML = `
+        <a class="back-link" href="${window.location.pathname}">← Volver al portafolio</a>
+        <div>${prettifyName(category)} / ${prettifyName(project)}</div>
+      `;
     }
 
     async function loadProjects() {
       try {
         setStatus("Cargando categorías y proyectos...");
         app.innerHTML = "";
+        topbarEl.style.display = "none";
+        topbarEl.innerHTML = "";
 
-        const rootItems = await fetchContents(ROOT_FOLDER);
-        const categories = rootItems.filter(item => item.type === "dir");
+        const params = new URLSearchParams(window.location.search);
+        const selectedCategory = params.get("cat");
+        const selectedProject = params.get("proyecto");
 
-        if (!categories.length) {
-          setStatus(`No se encontraron categorías dentro de <strong>${ROOT_FOLDER}</strong>.`, "error");
+        const categories = await getAllProjects();
+
+        const totalProjects = categories.reduce((sum, c) => sum + c.projects.length, 0);
+
+        if (!categories.length || totalProjects === 0) {
+          setStatus(
+            `No se encontraron proyectos válidos. Cada carpeta interna debe tener al menos <strong>2 imágenes</strong>.`,
+            "error"
+          );
           return;
         }
 
-        let totalProjects = 0;
-        let totalCategories = 0;
+        if (selectedCategory && selectedProject) {
+          const category = categories.find(c => c.name === selectedCategory);
+          const project = category?.projects.find(p => p.name === selectedProject);
+
+          if (!category || !project) {
+            setStatus("No se encontró el proyecto solicitado.", "error");
+            return;
+          }
+
+          renderTopbarSingle(category.name, project.name);
+
+          const wrap = document.createElement("section");
+          wrap.className = "single-view";
+          wrap.appendChild(
+            createCard(
+              category.name,
+              project.name,
+              project.beforeSrc,
+              project.afterSrc,
+              project.path,
+              true
+            )
+          );
+
+          app.appendChild(wrap);
+          setStatus(`Link individual cargado correctamente.`, "ok");
+          return;
+        }
+
+        let shownCategories = 0;
 
         for (const category of categories) {
-          const categoryPath = `${ROOT_FOLDER}/${category.name}`;
-          const categoryItems = await fetchContents(categoryPath);
-          const projectFolders = categoryItems.filter(item => item.type === "dir");
-
           const section = document.createElement("section");
           section.className = "category-block";
 
@@ -376,74 +560,44 @@
 
           const badge = document.createElement("div");
           badge.className = "category-badge";
-          badge.textContent = `${projectFolders.length} proyecto${projectFolders.length === 1 ? "" : "s"}`;
+          badge.textContent = `${category.projects.length} proyecto${category.projects.length === 1 ? "" : "s"}`;
 
           head.appendChild(title);
           head.appendChild(badge);
           section.appendChild(head);
 
-          const grid = document.createElement("div");
-          grid.className = "grid";
-
-          let validProjectsInCategory = 0;
-
-          for (const project of projectFolders) {
-            const projectPath = `${categoryPath}/${project.name}`;
-            const files = await fetchContents(projectPath);
-
-            const imageFiles = files
-              .filter(file => file.type === "file" && isImage(file.name))
-              .sort((a, b) => a.name.localeCompare(b.name, 'es', { numeric: true, sensitivity: 'base' }));
-
-            if (imageFiles.length < 2) {
-              continue;
-            }
-
-            const beforeSrc = rawUrl(imageFiles[0].path);
-            const afterSrc = rawUrl(imageFiles[1].path);
-
-            const card = createCard(
-              category.name,
-              project.name,
-              beforeSrc,
-              afterSrc,
-              `${category.name}/${project.name}`
-            );
-
-            grid.appendChild(card);
-            validProjectsInCategory++;
-            totalProjects++;
-          }
-
-          if (validProjectsInCategory === 0) {
+          if (!category.projects.length) {
             const empty = document.createElement("div");
             empty.className = "empty";
-            empty.innerHTML = `
-              No se encontraron proyectos válidos en esta categoría.<br>
-              Cada carpeta debe tener al menos <strong>2 imágenes</strong>.
-            `;
+            empty.innerHTML = `No se encontraron proyectos válidos en esta categoría.`;
             section.appendChild(empty);
           } else {
+            const grid = document.createElement("div");
+            grid.className = "grid";
+
+            for (const project of category.projects) {
+              grid.appendChild(
+                createCard(
+                  category.name,
+                  project.name,
+                  project.beforeSrc,
+                  project.afterSrc,
+                  project.path
+                )
+              );
+            }
+
             section.appendChild(grid);
+            shownCategories++;
           }
 
           app.appendChild(section);
-          totalCategories++;
-        }
-
-        if (totalProjects === 0) {
-          setStatus(
-            `Se encontraron carpetas, pero ningún proyecto válido. Verifica que cada carpeta interna tenga al menos <strong>2 imágenes</strong>.`,
-            "error"
-          );
-          return;
         }
 
         setStatus(
-          `Se cargaron correctamente <strong>${totalProjects}</strong> proyecto(s) en <strong>${totalCategories}</strong> categoría(s).`,
+          `Se cargaron correctamente <strong>${totalProjects}</strong> proyecto(s) en <strong>${shownCategories}</strong> categoría(s).`,
           "ok"
         );
-
       } catch (error) {
         console.error(error);
         setStatus(
@@ -458,6 +612,3 @@
   </script>
 </body>
 </html>
-</body>
-</html>
-
