@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Comparativos Antes y Después | Mantua Decoración</title>
+
   <style>
     :root{
       --bg:#f7f7f8;
@@ -14,10 +15,14 @@
       --accent:#9f1239;
       --accent-soft:#fdf2f8;
       --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:20px;
+      --radius:22px;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
+
+    html{
+      scroll-behavior:smooth;
+    }
 
     body{
       margin:0;
@@ -27,30 +32,31 @@
     }
 
     .wrap{
-      width:min(1240px, 92%);
+      width:min(1280px, 92%);
       margin:0 auto;
     }
 
     header{
-      padding:42px 0 18px;
+      padding:42px 0 20px;
       text-align:center;
     }
 
     h1{
       margin:0;
       font-size:clamp(2rem, 4vw, 3rem);
-      line-height:1.1;
+      line-height:1.08;
     }
 
     .sub{
       margin:14px auto 0;
       color:var(--muted);
-      font-size:1.08rem;
-      max-width:760px;
+      font-size:1.06rem;
+      max-width:780px;
+      line-height:1.5;
     }
 
     .status{
-      margin:24px auto 34px;
+      margin:24px auto 28px;
       padding:18px 20px;
       border-radius:16px;
       background:#fff;
@@ -77,7 +83,7 @@
       align-items:center;
       gap:14px;
       flex-wrap:wrap;
-      margin:0 0 24px;
+      margin:0 0 20px;
     }
 
     .back-link{
@@ -89,8 +95,34 @@
       font-weight:700;
     }
 
+    .filters{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:0 0 28px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+    }
+
+    .chip:hover{
+      border-color:#d1d5db;
+    }
+
     .category-block{
-      margin:40px 0 52px;
+      margin:38px 0 54px;
+      scroll-margin-top:24px;
     }
 
     .category-head{
@@ -104,7 +136,7 @@
 
     .category-title{
       margin:0;
-      font-size:1.7rem;
+      font-size:1.75rem;
       text-transform:capitalize;
     }
 
@@ -119,7 +151,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));
       gap:22px;
     }
 
@@ -134,12 +166,20 @@
     .viewer{
       position:relative;
       width:100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio:16 / 10;
       overflow:hidden;
       background:#e5e7eb;
       user-select:none;
       touch-action:none;
       cursor:ew-resize;
+    }
+
+    .before-layer,
+    .after-layer{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
     }
 
     .viewer img{
@@ -154,17 +194,9 @@
       -webkit-user-drag:none;
     }
 
-    .after-wrap{
-      position:absolute;
-      inset:0;
-      width:50%;
-      overflow:hidden;
-    }
-
-    .after-wrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    .after-layer{
+      z-index:2;
+      clip-path: inset(0 0 0 50%);
     }
 
     .divider{
@@ -193,8 +225,8 @@
       top:50%;
       left:50%;
       transform:translate(-50%, -50%);
-      width:54px;
-      height:54px;
+      width:56px;
+      height:56px;
       border-radius:50%;
       background:#fff;
       display:grid;
@@ -222,20 +254,21 @@
     .label.after{ right:14px; }
 
     .content{
-      padding:18px 18px 18px;
+      padding:18px;
     }
 
     .project-title{
       margin:0 0 8px;
-      font-size:1.15rem;
+      font-size:1.18rem;
       text-transform:capitalize;
     }
 
     .project-meta{
-      margin:0 0 12px;
+      margin:0 0 14px;
       color:var(--muted);
-      font-size:.93rem;
+      font-size:.94rem;
       word-break:break-word;
+      line-height:1.45;
     }
 
     .actions{
@@ -272,12 +305,8 @@
       overflow:visible;
     }
 
-    .single-view .viewer{
-      border-radius:20px 20px 0 0;
-    }
-
     .empty{
-      padding:30px 18px;
+      padding:28px 18px;
       border:1px dashed #d1d5db;
       border-radius:18px;
       color:var(--muted);
@@ -285,16 +314,17 @@
     }
 
     footer{
-      padding:20px 0 48px;
+      padding:18px 0 50px;
       text-align:center;
       color:var(--muted);
       font-size:.95rem;
     }
 
-    @media (max-width:640px){
+    @media (max-width:700px){
       .grid{
         grid-template-columns:1fr;
       }
+
       .handle{
         width:48px;
         height:48px;
@@ -306,11 +336,14 @@
   <div class="wrap">
     <header>
       <h1>Comparativos Antes y Después</h1>
-      <p class="sub">Portafolio visual organizado automáticamente por producto y proyecto.</p>
+      <p class="sub">
+        Portafolio visual organizado automáticamente por producto y proyecto.
+      </p>
     </header>
 
     <div id="status" class="status">Cargando proyectos...</div>
     <div id="topbar" class="topbar" style="display:none;"></div>
+    <div id="filters" class="filters" style="display:none;"></div>
     <main id="app"></main>
 
     <footer>
@@ -326,6 +359,7 @@
 
     const statusEl = document.getElementById("status");
     const topbarEl = document.getElementById("topbar");
+    const filtersEl = document.getElementById("filters");
     const app = document.getElementById("app");
 
     function setStatus(message, type = "") {
@@ -362,12 +396,12 @@
     }
 
     function initTouchCompare(viewer, initialPercent = 50) {
-      const afterWrap = viewer.querySelector(".after-wrap");
+      const afterLayer = viewer.querySelector(".after-layer");
       const divider = viewer.querySelector(".divider");
 
       function setPercent(percent) {
         const safe = Math.max(0, Math.min(100, percent));
-        afterWrap.style.width = safe + "%";
+        afterLayer.style.clipPath = `inset(0 0 0 ${safe}%)`;
         divider.style.left = safe + "%";
       }
 
@@ -380,32 +414,24 @@
 
       let dragging = false;
 
-      const startDrag = (clientX) => {
-        dragging = true;
-        updateFromClientX(clientX);
-      };
-
-      const moveDrag = (clientX) => {
-        if (!dragging) return;
-        updateFromClientX(clientX);
-      };
-
-      const endDrag = () => {
-        dragging = false;
-      };
-
       viewer.addEventListener("pointerdown", (e) => {
-        startDrag(e.clientX);
+        dragging = true;
+        updateFromClientX(e.clientX);
         viewer.setPointerCapture(e.pointerId);
       });
 
       viewer.addEventListener("pointermove", (e) => {
-        moveDrag(e.clientX);
+        if (!dragging) return;
+        updateFromClientX(e.clientX);
       });
 
-      viewer.addEventListener("pointerup", endDrag);
-      viewer.addEventListener("pointercancel", endDrag);
-      viewer.addEventListener("pointerleave", () => {});
+      viewer.addEventListener("pointerup", () => {
+        dragging = false;
+      });
+
+      viewer.addEventListener("pointercancel", () => {
+        dragging = false;
+      });
 
       setPercent(initialPercent);
     }
@@ -418,13 +444,18 @@
 
       card.innerHTML = `
         <div class="viewer">
-          <img src="${beforeSrc}" alt="Antes de ${projectName}" loading="lazy">
-          <div class="after-wrap">
+          <div class="before-layer">
+            <img src="${beforeSrc}" alt="Antes de ${projectName}" loading="lazy">
+          </div>
+
+          <div class="after-layer">
             <img src="${afterSrc}" alt="Después de ${projectName}" loading="lazy">
           </div>
+
           <div class="divider">
             <div class="handle">↔</div>
           </div>
+
           <div class="label before">Antes</div>
           <div class="label after">Después</div>
         </div>
@@ -432,11 +463,15 @@
         <div class="content">
           <h3 class="project-title">${prettifyName(projectName)}</h3>
           <p class="project-meta">${prettifyName(categoryName)} · ${projectPath}</p>
+
           <div class="actions">
-            ${single
-              ? `<a class="btn" href="${window.location.pathname}">← Volver a todos</a>`
-              : `<a class="btn primary" href="${projectLink}">Ver link individual</a>`
+            ${
+              single
+                ? `<a class="btn primary" href="${window.location.pathname}">← Volver al portafolio</a>`
+                : `<a class="btn primary" href="${projectLink}">Ver comparativo</a>`
             }
+            <a class="btn" href="${beforeSrc}" target="_blank">Link imagen 1</a>
+            <a class="btn" href="${afterSrc}" target="_blank">Link imagen 2</a>
           </div>
         </div>
       `;
@@ -485,6 +520,24 @@
       return data;
     }
 
+    function renderFilters(categories) {
+      const validCategories = categories.filter(c => c.projects.length > 0);
+
+      if (!validCategories.length) {
+        filtersEl.style.display = "none";
+        filtersEl.innerHTML = "";
+        return;
+      }
+
+      filtersEl.style.display = "flex";
+      filtersEl.innerHTML = `
+        <a class="chip" href="#top">Todos</a>
+        ${validCategories.map(c => `
+          <a class="chip" href="#cat-${c.name}">${prettifyName(c.name)}</a>
+        `).join("")}
+      `;
+    }
+
     function renderTopbarSingle(category, project) {
       topbarEl.style.display = "flex";
       topbarEl.innerHTML = `
@@ -499,13 +552,14 @@
         app.innerHTML = "";
         topbarEl.style.display = "none";
         topbarEl.innerHTML = "";
+        filtersEl.style.display = "none";
+        filtersEl.innerHTML = "";
 
         const params = new URLSearchParams(window.location.search);
         const selectedCategory = params.get("cat");
         const selectedProject = params.get("proyecto");
 
         const categories = await getAllProjects();
-
         const totalProjects = categories.reduce((sum, c) => sum + c.projects.length, 0);
 
         if (!categories.length || totalProjects === 0) {
@@ -529,6 +583,7 @@
 
           const wrap = document.createElement("section");
           wrap.className = "single-view";
+
           wrap.appendChild(
             createCard(
               category.name,
@@ -541,15 +596,18 @@
           );
 
           app.appendChild(wrap);
-          setStatus(`Link individual cargado correctamente.`, "ok");
+          setStatus("Link individual cargado correctamente.", "ok");
           return;
         }
+
+        renderFilters(categories);
 
         let shownCategories = 0;
 
         for (const category of categories) {
           const section = document.createElement("section");
           section.className = "category-block";
+          section.id = `cat-${category.name}`;
 
           const head = document.createElement("div");
           head.className = "category-head";
@@ -569,7 +627,7 @@
           if (!category.projects.length) {
             const empty = document.createElement("div");
             empty.className = "empty";
-            empty.innerHTML = `No se encontraron proyectos válidos en esta categoría.`;
+            empty.textContent = "No se encontraron proyectos válidos en esta categoría.";
             section.appendChild(empty);
           } else {
             const grid = document.createElement("div");
@@ -612,3 +670,4 @@
   </script>
 </body>
 </html>
+
