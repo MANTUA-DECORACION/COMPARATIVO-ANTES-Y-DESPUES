@@ -45,7 +45,7 @@
     .sub{
       margin:14px auto 0;
       color:var(--muted);
-      font-size:1.1rem;
+      font-size:1.08rem;
       max-width:760px;
     }
 
@@ -139,12 +139,6 @@
       overflow:hidden;
       border-right:3px solid #fff;
       box-shadow:2px 0 8px rgba(0,0,0,.15);
-    }
-
-    .after-wrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
     }
 
     .divider{
@@ -243,6 +237,9 @@
       margin:10px 0 0;
       font-size:.92rem;
       color:var(--muted);
+      max-width:860px;
+      margin-inline:auto;
+      line-height:1.5;
     }
 
     @media (max-width:640px){
@@ -257,32 +254,28 @@
     <header>
       <h1>Comparativos Antes y Después</h1>
       <p class="sub">
-        Proyectos reales organizados automáticamente por categoría y carpeta.
+        Portafolio visual organizado automáticamente por categoría y carpeta.
       </p>
     </header>
 
     <div id="status" class="status">Cargando proyectos...</div>
-
     <main id="app"></main>
 
     <footer>
-      Mantua Decoración · Comparativos visuales automáticos
+      Mantua Decoración · Comparativos automáticos
       <div class="tips">
-        Solo crea carpetas dentro de <strong>proyectos</strong> y sube imágenes llamadas
-        <strong>antes</strong> y <strong>despues</strong>.
+        Solo crea carpetas dentro de <strong>proyectos</strong>. Cada carpeta de proyecto debe contener
+        <strong>2 imágenes</strong> con cualquier nombre. La primera se mostrará como <strong>Antes</strong> y la segunda como <strong>Después</strong>.
       </div>
     </footer>
   </div>
 
   <script>
-    // ========= CONFIGURACIÓN FIJA =========
-    // Solo cambia esto UNA VEZ si cambias de repositorio.
     const GITHUB_USER = "MANTUA-DECORACION";
     const GITHUB_REPO = "COMPARATIVO-ANTES-Y-DESPUES";
     const GITHUB_BRANCH = "main";
     const ROOT_FOLDER = "proyectos";
 
-    // ========= UTILIDADES =========
     const statusEl = document.getElementById("status");
     const app = document.getElementById("app");
 
@@ -301,14 +294,6 @@
       return /\.(jpg|jpeg|png|webp|avif)$/i.test(fileName);
     }
 
-    function isBeforeImage(fileName) {
-      return /^antes(\.[a-z0-9]+)$/i.test(fileName);
-    }
-
-    function isAfterImage(fileName) {
-      return /^despues(\.[a-z0-9]+)$/i.test(fileName);
-    }
-
     function rawUrl(path) {
       return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
     }
@@ -316,11 +301,7 @@
     async function fetchContents(path) {
       const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
       const res = await fetch(url);
-
-      if (!res.ok) {
-        throw new Error(`No se pudo leer la ruta: ${path}`);
-      }
-
+      if (!res.ok) throw new Error(`No se pudo leer: ${path}`);
       return await res.json();
     }
 
@@ -367,15 +348,11 @@
         setStatus("Cargando categorías y proyectos...");
         app.innerHTML = "";
 
-        // 1) Leer categorías dentro de /proyectos
         const rootItems = await fetchContents(ROOT_FOLDER);
         const categories = rootItems.filter(item => item.type === "dir");
 
         if (!categories.length) {
-          setStatus(
-            `No se encontraron categorías dentro de <strong>${ROOT_FOLDER}</strong>.`,
-            "error"
-          );
+          setStatus(`No se encontraron categorías dentro de <strong>${ROOT_FOLDER}</strong>.`, "error");
           return;
         }
 
@@ -413,17 +390,17 @@
           for (const project of projectFolders) {
             const projectPath = `${categoryPath}/${project.name}`;
             const files = await fetchContents(projectPath);
-            const imageFiles = files.filter(file => file.type === "file" && isImage(file.name));
 
-            const beforeFile = imageFiles.find(file => isBeforeImage(file.name));
-            const afterFile = imageFiles.find(file => isAfterImage(file.name));
+            const imageFiles = files
+              .filter(file => file.type === "file" && isImage(file.name))
+              .sort((a, b) => a.name.localeCompare(b.name, 'es', { numeric: true, sensitivity: 'base' }));
 
-            if (!beforeFile || !afterFile) {
+            if (imageFiles.length < 2) {
               continue;
             }
 
-            const beforeSrc = rawUrl(beforeFile.path);
-            const afterSrc = rawUrl(afterFile.path);
+            const beforeSrc = rawUrl(imageFiles[0].path);
+            const afterSrc = rawUrl(imageFiles[1].path);
 
             const card = createCard(
               category.name,
@@ -443,7 +420,7 @@
             empty.className = "empty";
             empty.innerHTML = `
               No se encontraron proyectos válidos en esta categoría.<br>
-              Recuerda subir dentro de cada carpeta un <strong>antes</strong> y un <strong>despues</strong>.
+              Cada carpeta debe tener al menos <strong>2 imágenes</strong>.
             `;
             section.appendChild(empty);
           } else {
@@ -456,7 +433,7 @@
 
         if (totalProjects === 0) {
           setStatus(
-            `Se encontraron carpetas, pero ningún proyecto válido. Verifica que cada carpeta tenga imágenes llamadas <strong>antes</strong> y <strong>despues</strong>.`,
+            `Se encontraron carpetas, pero ningún proyecto válido. Verifica que cada carpeta interna tenga al menos <strong>2 imágenes</strong>.`,
             "error"
           );
           return;
@@ -471,7 +448,7 @@
         console.error(error);
         setStatus(
           `Error al cargar los proyectos.<br>
-          Revisa que exista la carpeta <strong>${ROOT_FOLDER}</strong>, que el repositorio sea <strong>público</strong> y que GitHub Pages esté activo.`,
+          Revisa que exista la carpeta <strong>${ROOT_FOLDER}</strong>, que el repositorio sea público y que GitHub Pages esté activo.`,
           "error"
         );
       }
@@ -481,3 +458,6 @@
   </script>
 </body>
 </html>
+</body>
+</html>
+
