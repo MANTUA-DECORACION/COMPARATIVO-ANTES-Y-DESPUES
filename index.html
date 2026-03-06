@@ -1,124 +1,408 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Antes / Después</title>
-<style>
-  html, body { margin:0; padding:0; background:transparent; }
-  body { font-family: Arial, sans-serif; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comparativos Antes y Después</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:32px 20px 60px;
+      background:#f5f5f5;
+      color:#111;
+    }
 
-  .wrap { max-width: 1100px; margin: 0 auto; }
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+    }
 
-  .box{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    overflow:hidden;
-    border-radius:14px;
+    h1{
+      text-align:center;
+      margin:0 0 10px;
+    }
 
-    user-select:none;
-    -webkit-user-select:none;
-    touch-action:none;
-    cursor: ew-resize;
+    .intro{
+      text-align:center;
+      max-width:800px;
+      margin:0 auto 40px;
+      color:#555;
+    }
 
-    /* posición del divisor */
-    --pos: 50%;
-  }
+    .categoria{
+      margin:50px 0 20px;
+      font-size:28px;
+      font-weight:700;
+      border-bottom:2px solid #ddd;
+      padding-bottom:10px;
+      text-transform:capitalize;
+    }
 
-  /* Ambas capas a tamaño FIJO (no cambian cuando arrastras) */
-  .layer{
-    position:absolute;
-    inset:0;
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-  }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+      gap:28px;
+    }
 
-  .after { background-image: url("despues.jpg"); }
+    .card{
+      background:#fff;
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
 
-  .before {
-    background-image: url("antes.jpg");
-    /* Solo se RECORTA (no se reescala) => cero “deformación” */
-    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
-  }
+    .titulo{
+      font-size:18px;
+      font-weight:700;
+      margin:0 0 14px;
+      text-transform:capitalize;
+    }
 
-  .handle{
-    position:absolute;
-    top:0; bottom:0;
-    left: var(--pos);
-    width:0;
-    pointer-events:none;
-  }
-  .line{
-    position:absolute;
-    top:0; bottom:0;
-    left:-2px;
-    width:4px;
-    background:#fff;
-  }
-  .knob{
-    position:absolute;
-    top:50%;
-    left:-18px;
-    transform:translateY(-50%);
-    width:36px;height:36px;border-radius:999px;background:#fff;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 6px 18px rgba(0,0,0,.25);
-  }
-  .knob:before{ content:"↔"; font-size:18px; color:#111; }
+    .comparador{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      overflow:hidden;
+      border-radius:14px;
+      background:#ddd;
+      user-select:none;
+      -webkit-user-select:none;
+      touch-action:none;
+      cursor:ew-resize;
+      --pos: 50%;
+    }
 
-  .tag{
-    position:absolute;top:12px;padding:8px 12px;border-radius:999px;
-    background:rgba(0,0,0,.55);color:#fff;font-weight:700;font-size:12px;
-    letter-spacing:.6px;text-transform:uppercase;
-  }
-  .tag.left{ left:12px; }
-  .tag.right{ right:12px; }
-</style>
+    .layer{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+
+    .before{
+      clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+    }
+
+    .handle{
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:var(--pos);
+      width:0;
+      pointer-events:none;
+    }
+
+    .line{
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:-2px;
+      width:4px;
+      background:#fff;
+    }
+
+    .knob{
+      position:absolute;
+      top:50%;
+      left:-18px;
+      transform:translateY(-50%);
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+    }
+
+    .knob:before{
+      content:"↔";
+      font-size:18px;
+      color:#111;
+    }
+
+    .tag{
+      position:absolute;
+      top:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      color:#fff;
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+    }
+
+    .tag.left{ left:12px; }
+    .tag.right{ right:12px; }
+
+    .nota{
+      margin-top:10px;
+      font-size:13px;
+      color:#666;
+    }
+
+    .estado{
+      text-align:center;
+      color:#666;
+      margin-top:30px;
+    }
+
+    .error{
+      background:#fff3f3;
+      color:#8b1e1e;
+      border:1px solid #f0caca;
+      padding:14px;
+      border-radius:12px;
+      margin-top:20px;
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="box" id="box">
-      <div class="layer after"></div>
-      <div class="layer before"></div>
+    <h1>Comparativos Antes y Después</h1>
+    <p class="intro">
+      Proyectos reales organizados automáticamente por categoría y carpeta.
+    </p>
 
-      <div class="tag left">Antes</div>
-      <div class="tag right">Después</div>
-
-      <div class="handle" id="handle">
-        <div class="line"></div>
-        <div class="knob"></div>
-      </div>
+    <div id="app">
+      <p class="estado">Cargando proyectos...</p>
     </div>
   </div>
 
-<script>
-  const box = document.getElementById("box");
-  let dragging = false;
+  <script>
+    // =========================
+    // CONFIGURA ESTO
+    // =========================
+    const GITHUB_USER = "MANTUA-DECORACION";
+    const GITHUB_REPO = "COMPARATIVO-ANTES-Y-DESPUES";
+    const BASE_FOLDER = "proyectos-ant-des";
 
-  function setPos(clientX){
-    const rect = box.getBoundingClientRect();
-    let x = (clientX - rect.left) / rect.width;
-    if (x < 0) x = 0;
-    if (x > 1) x = 1;
-    box.style.setProperty("--pos", (x * 100).toFixed(2) + "%");
-  }
+    // =========================
+    // UTILIDADES
+    // =========================
+    const IMG_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
 
-  window.addEventListener("load", () => {
-    const r = box.getBoundingClientRect();
-    setPos(r.left + r.width/2);
-  });
+    function isImageFile(name){
+      const lower = name.toLowerCase();
+      return IMG_EXTENSIONS.some(ext => lower.endsWith(ext));
+    }
 
-  ["dragstart","selectstart"].forEach(evt => box.addEventListener(evt, e => e.preventDefault()));
+    function prettifyName(name){
+      return name
+        .replace(/[-_]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
-  box.addEventListener("mousedown", (e)=>{ e.preventDefault(); dragging = true; setPos(e.clientX); });
-  window.addEventListener("mouseup", ()=> dragging = false);
-  window.addEventListener("mousemove",(e)=>{ if(!dragging) return; e.preventDefault(); setPos(e.clientX); });
+    function sortImages(images){
+      const score = (name) => {
+        const n = name.toLowerCase();
+        if (n.includes("antes")) return 1;
+        if (n.includes("before")) return 2;
+        if (n.includes("despues")) return 3;
+        if (n.includes("después")) return 4;
+        if (n.includes("after")) return 5;
+        return 10;
+      };
+      return [...images].sort((a, b) => {
+        const diff = score(a.name) - score(b.name);
+        if (diff !== 0) return diff;
+        return a.name.localeCompare(b.name);
+      });
+    }
 
-  box.addEventListener("touchstart",(e)=>{ dragging = true; setPos(e.touches[0].clientX); }, {passive:false});
-  window.addEventListener("touchend", ()=> dragging = false, {passive:true});
-  window.addEventListener("touchmove",(e)=>{ if(!dragging) return; e.preventDefault(); setPos(e.touches[0].clientX); }, {passive:false});
-</script>
+    function pickBeforeAfter(images){
+      if (!images || images.length < 2) return null;
+
+      const lowerMap = images.map(img => ({
+        ...img,
+        lower: img.name.toLowerCase()
+      }));
+
+      let before =
+        lowerMap.find(i => i.lower.includes("antes")) ||
+        lowerMap.find(i => i.lower.includes("before"));
+
+      let after =
+        lowerMap.find(i => i.lower.includes("despues")) ||
+        lowerMap.find(i => i.lower.includes("después")) ||
+        lowerMap.find(i => i.lower.includes("after"));
+
+      if (before && after && before.path !== after.path) {
+        return { before, after };
+      }
+
+      const ordered = sortImages(images);
+      return {
+        before: ordered[0],
+        after: ordered[1]
+      };
+    }
+
+    async function githubContents(path){
+      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`No se pudo leer: ${path}`);
+      }
+      return await res.json();
+    }
+
+    function createComparator(categoryName, projectName, beforeUrl, afterUrl, beforeFile, afterFile){
+      const section = document.createElement("div");
+      section.className = "card";
+
+      section.innerHTML = `
+        <div class="titulo">${projectName}</div>
+        <div class="comparador">
+          <div class="layer after" style='background-image:url("${afterUrl}")'></div>
+          <div class="layer before" style='background-image:url("${beforeUrl}")'></div>
+          <div class="tag left">Antes</div>
+          <div class="tag right">Después</div>
+          <div class="handle">
+            <div class="line"></div>
+            <div class="knob"></div>
+          </div>
+        </div>
+        <div class="nota">
+          Categoría: ${categoryName}<br>
+          Archivos usados: ${beforeFile} / ${afterFile}
+        </div>
+      `;
+
+      return section;
+    }
+
+    function activateComparators(){
+      document.querySelectorAll(".comparador").forEach((box)=>{
+        let dragging = false;
+
+        function setPos(clientX){
+          const rect = box.getBoundingClientRect();
+          let x = (clientX - rect.left) / rect.width;
+          if (x < 0) x = 0;
+          if (x > 1) x = 1;
+          box.style.setProperty("--pos", (x * 100).toFixed(2) + "%");
+        }
+
+        const center = () => {
+          const rect = box.getBoundingClientRect();
+          setPos(rect.left + rect.width / 2);
+        };
+
+        center();
+        window.addEventListener("resize", center);
+
+        box.addEventListener("mousedown", (e)=>{
+          e.preventDefault();
+          dragging = true;
+          setPos(e.clientX);
+        });
+
+        window.addEventListener("mouseup", ()=> dragging = false);
+
+        window.addEventListener("mousemove", (e)=>{
+          if(!dragging) return;
+          e.preventDefault();
+          setPos(e.clientX);
+        });
+
+        box.addEventListener("touchstart", (e)=>{
+          dragging = true;
+          setPos(e.touches[0].clientX);
+        }, {passive:false});
+
+        window.addEventListener("touchend", ()=> dragging = false, {passive:true});
+
+        window.addEventListener("touchmove", (e)=>{
+          if(!dragging) return;
+          e.preventDefault();
+          setPos(e.touches[0].clientX);
+        }, {passive:false});
+      });
+    }
+
+    async function renderProjects(){
+      const app = document.getElementById("app");
+      app.innerHTML = `<p class="estado">Cargando proyectos...</p>`;
+
+      try {
+        const categories = await githubContents(BASE_FOLDER);
+
+        const categoryDirs = categories.filter(item => item.type === "dir");
+
+        if (!categoryDirs.length) {
+          app.innerHTML = `<div class="error">No se encontraron categorías dentro de la carpeta "${BASE_FOLDER}".</div>`;
+          return;
+        }
+
+        app.innerHTML = "";
+
+        for (const category of categoryDirs) {
+          const categoryBlock = document.createElement("section");
+
+          const categoryTitle = document.createElement("div");
+          categoryTitle.className = "categoria";
+          categoryTitle.textContent = prettifyName(category.name);
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+
+          const projects = await githubContents(category.path);
+          const projectDirs = projects.filter(item => item.type === "dir");
+
+          for (const project of projectDirs) {
+            const files = await githubContents(project.path);
+            const images = files.filter(file => file.type === "file" && isImageFile(file.name));
+
+            if (images.length < 2) continue;
+
+            const selected = pickBeforeAfter(images);
+            if (!selected) continue;
+
+            const card = createComparator(
+              prettifyName(category.name),
+              prettifyName(project.name),
+              selected.before.download_url,
+              selected.after.download_url,
+              selected.before.name,
+              selected.after.name
+            );
+
+            grid.appendChild(card);
+          }
+
+          if (grid.children.length > 0) {
+            categoryBlock.appendChild(categoryTitle);
+            categoryBlock.appendChild(grid);
+            app.appendChild(categoryBlock);
+          }
+        }
+
+        if (!app.children.length) {
+          app.innerHTML = `<div class="error">Se encontraron carpetas, pero no había proyectos con al menos 2 imágenes.</div>`;
+          return;
+        }
+
+        activateComparators();
+
+      } catch (error) {
+        document.getElementById("app").innerHTML = `
+          <div class="error">
+            Error al cargar los proyectos.<br>
+            Revisa que exista la carpeta <strong>${BASE_FOLDER}</strong> y que el repositorio sea público.
+          </div>
+        `;
+        console.error(error);
+      }
+    }
+
+    renderProjects();
+  </script>
 </body>
 </html>
