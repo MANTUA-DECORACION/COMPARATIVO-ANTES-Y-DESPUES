@@ -1,780 +1,585 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparativos Antes y Después | Mantua Decoración</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparativos Antes y Después | Mantua Decoración</title>
 
-  <style>
-    :root{
-      --bg:#f7f7f8;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --accent:#9f1239;
-      --accent-soft:#fdf2f8;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:22px;
-    }
+<style>
+:root{
+  --bg:#f7f7f8;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --accent:#9f1239;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+  --radius:22px;
+}
 
-    *{ box-sizing:border-box; }
+*{
+  box-sizing:border-box;
+}
 
-    html{
-      scroll-behavior:smooth;
-    }
+html, body{
+  margin:0;
+  padding:0;
+}
 
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    .wrap{
-      width:min(1280px, 92%);
-      margin:0 auto;
-    }
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-    header{
-      padding:42px 0 20px;
-      text-align:center;
-    }
+.wrap{
+  width:min(1280px, 92%);
+  margin:auto;
+}
 
-    h1{
-      margin:0;
-      font-size:clamp(2rem, 4vw, 3rem);
-      line-height:1.08;
-    }
+header{
+  text-align:center;
+  padding:40px 0 20px;
+}
 
-    .sub{
-      margin:14px auto 0;
-      color:var(--muted);
-      font-size:1.06rem;
-      max-width:780px;
-      line-height:1.5;
-    }
+h1{
+  margin:0;
+  font-size:clamp(2rem,4vw,3rem);
+}
 
-    .status{
-      margin:24px auto 28px;
-      padding:18px 20px;
-      border-radius:16px;
-      background:#fff;
-      border:1px solid var(--line);
-      color:var(--muted);
-      box-shadow:var(--shadow);
-    }
+.sub{
+  color:var(--muted);
+  margin-top:10px;
+}
 
-    .status.error{
-      background:#fef2f2;
-      border-color:#fecaca;
-      color:#991b1b;
-    }
+.status{
+  margin:20px 0;
+  padding:16px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid var(--line);
+}
 
-    .status.ok{
-      background:#f0fdf4;
-      border-color:#bbf7d0;
-      color:#166534;
-    }
+.status.ok{
+  background:#f0fdf4;
+  border-color:#bbf7d0;
+  color:#166534;
+}
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-      margin:0 0 20px;
-    }
+.status.error{
+  background:#fef2f2;
+  border-color:#fecaca;
+  color:#991b1b;
+}
 
-    .back-link{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:700;
-    }
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
 
-    .filters{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:0 0 28px;
-    }
+.chip{
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  text-decoration:none;
+  font-weight:700;
+  color:var(--text);
+}
 
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 14px;
-      border-radius:999px;
-      background:#fff;
-      border:1px solid var(--line);
-      text-decoration:none;
-      color:var(--text);
-      font-weight:700;
-      box-shadow:0 2px 10px rgba(0,0,0,.04);
-    }
+.category-block{
+  margin:40px 0;
+}
 
-    .category-block{
-      margin:38px 0 54px;
-      scroll-margin-top:24px;
-    }
+.category-title{
+  font-size:1.6rem;
+  margin-bottom:15px;
+  text-transform:capitalize;
+}
 
-    .category-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:18px;
-      flex-wrap:wrap;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+  gap:22px;
+}
 
-    .category-title{
-      margin:0;
-      font-size:1.75rem;
-      text-transform:capitalize;
-    }
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
 
-    .category-badge{
-      padding:8px 12px;
-      background:var(--accent-soft);
-      color:var(--accent);
-      border-radius:999px;
-      font-size:.95rem;
-      font-weight:700;
-    }
+.viewer{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  background:#e5e7eb;
+  cursor:ew-resize;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  -webkit-touch-callout:none;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));
-      gap:22px;
-    }
+.before-layer,
+.after-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
+.viewer img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  -webkit-user-drag:none;
+  -webkit-touch-callout:none;
+}
 
-    .viewer{
-      position:relative;
-      width:100%;
-      aspect-ratio:16 / 10;
-      overflow:hidden;
-      background:#e5e7eb;
-      user-select:none;
-      touch-action:none;
-      cursor:ew-resize;
-    }
+.after-layer{
+  z-index:2;
+  clip-path:inset(0 0 0 50%);
+}
 
-    .before-layer,
-    .after-layer{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-    }
+.divider{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:0;
+  pointer-events:none;
+  z-index:4;
+}
 
-    .viewer img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      pointer-events:none;
-      user-select:none;
-      -webkit-user-drag:none;
-    }
+.divider::before{
+  content:"";
+  position:absolute;
+  left:-1.5px;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:#fff;
+  box-shadow:0 0 10px rgba(0,0,0,.22);
+}
 
-    .after-layer{
-      z-index:2;
-      clip-path: inset(0 0 0 50%);
-    }
+.handle{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#fff;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  color:#111827;
+  font-weight:700;
+}
 
-    .divider{
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:50%;
-      width:0;
-      pointer-events:none;
-      z-index:4;
-    }
+.label{
+  position:absolute;
+  top:12px;
+  padding:6px 10px;
+  background:rgba(0,0,0,.7);
+  color:#fff;
+  border-radius:20px;
+  font-size:.8rem;
+  z-index:5;
+  pointer-events:none;
+}
 
-    .divider::before{
-      content:"";
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:-1.5px;
-      width:3px;
-      background:#fff;
-      box-shadow:0 0 10px rgba(0,0,0,.22);
-    }
+.label.before{ left:12px; }
+.label.after{ right:12px; }
 
-    .handle{
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%, -50%);
-      width:56px;
-      height:56px;
-      border-radius:50%;
-      background:#fff;
-      display:grid;
-      place-items:center;
-      font-size:24px;
-      box-shadow:0 8px 20px rgba(0,0,0,.18);
-      color:#111827;
-      font-weight:700;
-    }
+.content{
+  padding:16px;
+}
 
-    .label{
-      position:absolute;
-      top:14px;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:.85rem;
-      font-weight:700;
-      background:rgba(17,24,39,.72);
-      color:#fff;
-      backdrop-filter:blur(6px);
-      z-index:5;
-    }
+.project-title{
+  font-weight:700;
+  margin-bottom:10px;
+  text-transform:capitalize;
+}
 
-    .label.before{ left:14px; }
-    .label.after{ right:14px; }
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-    .content{
-      padding:18px;
-    }
+.btn{
+  padding:8px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  text-decoration:none;
+  font-weight:700;
+  color:#111;
+}
 
-    .project-title{
-      margin:0 0 8px;
-      font-size:1.18rem;
-      text-transform:capitalize;
-    }
+.btn.primary{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
 
-    .project-meta{
-      margin:0 0 14px;
-      color:var(--muted);
-      font-size:.94rem;
-      word-break:break-word;
-      line-height:1.45;
-    }
+/* Vista individual limpia */
+body.single-mode{
+  background:#fff;
+}
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+body.single-mode .wrap{
+  width:100%;
+  max-width:100%;
+  margin:0;
+}
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 14px;
-      border-radius:12px;
-      text-decoration:none;
-      font-weight:700;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
-    }
+body.single-mode header,
+body.single-mode .filters,
+body.single-mode .status,
+body.single-mode .content{
+  display:none !important;
+}
 
-    .btn.primary{
-      background:var(--accent);
-      border-color:var(--accent);
-      color:#fff;
-    }
+body.single-mode .category-title{
+  display:none !important;
+}
 
-    .single-view{
-      max-width:1080px;
-      margin:0 auto 50px;
-    }
+body.single-mode .category-block{
+  margin:0;
+}
 
-    .embed-wrap{
-      width:100%;
-      max-width:100%;
-      margin:0;
-      padding:0;
-    }
+body.single-mode .card{
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+  overflow:hidden;
+  background:transparent;
+}
 
-    .embed-card{
-      border:none;
-      border-radius:0;
-      box-shadow:none;
-      background:transparent;
-      overflow:hidden;
-    }
+body.single-mode .viewer{
+  width:100%;
+  height:100vh;
+  min-height:320px;
+  max-height:100vh;
+  aspect-ratio:auto;
+  border-radius:0;
+}
 
-    .embed-card .viewer{
-      aspect-ratio:16 / 10;
-      border-radius:0;
-    }
+@media (max-width:700px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 
-    .empty{
-      padding:28px 18px;
-      border:1px dashed #d1d5db;
-      border-radius:18px;
-      color:var(--muted);
-      background:#fff;
-    }
+  .handle{
+    width:48px;
+    height:48px;
+  }
 
-    footer{
-      padding:18px 0 50px;
-      text-align:center;
-      color:var(--muted);
-      font-size:.95rem;
-    }
-
-    body.embed-mode{
-      background:transparent;
-    }
-
-    body.embed-mode .wrap{
-      width:100%;
-      max-width:100%;
-      margin:0;
-    }
-
-    body.embed-mode header,
-    body.embed-mode .status,
-    body.embed-mode .topbar,
-    body.embed-mode .filters,
-    body.embed-mode footer,
-    body.embed-mode .content{
-      display:none !important;
-    }
-
-    body.embed-mode .single-view{
-      max-width:100%;
-      margin:0;
-    }
-
-    body.embed-mode .card{
-      border:none;
-      border-radius:0;
-      box-shadow:none;
-      overflow:hidden;
-      background:transparent;
-    }
-
-    body.embed-mode .viewer{
-      width:100%;
-      aspect-ratio:16 / 10;
-      border-radius:0;
-    }
-
-    @media (max-width:700px){
-      .grid{
-        grid-template-columns:1fr;
-      }
-
-      .handle{
-        width:48px;
-        height:48px;
-      }
-    }
-  </style>
+  body.single-mode .viewer{
+    height:100svh;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <h1 id="top">Comparativos Antes y Después</h1>
-      <p class="sub">
-        Portafolio visual organizado automáticamente por producto y proyecto.
-      </p>
-    </header>
+<div class="wrap">
 
-    <div id="status" class="status">Cargando proyectos...</div>
-    <div id="topbar" class="topbar" style="display:none;"></div>
-    <div id="filters" class="filters" style="display:none;"></div>
-    <main id="app"></main>
+<header>
+  <h1 id="top">Comparativos Antes y Después</h1>
+  <p class="sub">Portafolio visual organizado automáticamente por producto.</p>
+</header>
 
-    <footer>
-      Mantua Decoración · Comparativos automáticos
-    </footer>
-  </div>
+<div id="status" class="status">Cargando proyectos...</div>
+<div id="filters" class="filters"></div>
+<main id="app"></main>
 
-  <script>
-    const GITHUB_USER = "MANTUA-DECORACION";
-    const GITHUB_REPO = "COMPARATIVO-ANTES-Y-DESPUES";
-    const GITHUB_BRANCH = "main";
-    const ROOT_FOLDER = "proyectos";
+</div>
 
-    const statusEl = document.getElementById("status");
-    const topbarEl = document.getElementById("topbar");
-    const filtersEl = document.getElementById("filters");
-    const app = document.getElementById("app");
+<script>
+const USER = "MANTUA-DECORACION";
+const REPO = "COMPARATIVO-ANTES-Y-DESPUES";
+const BRANCH = "main";
+const ROOT = "proyectos";
 
-    function setStatus(message, type = "") {
-      statusEl.className = "status" + (type ? " " + type : "");
-      statusEl.innerHTML = message;
-    }
+const statusEl = document.getElementById("status");
+const filtersEl = document.getElementById("filters");
+const app = document.getElementById("app");
 
-    function prettifyName(name) {
-      return name
-        .replace(/[-_]+/g, " ")
-        .replace(/\b\w/g, c => c.toUpperCase());
-    }
+function raw(path){
+  return `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/${path}`;
+}
 
-    function isImage(fileName) {
-      return /\.(jpg|jpeg|png|webp|avif)$/i.test(fileName);
-    }
+async function fetchDir(path){
+  const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${path}?ref=${BRANCH}`);
+  if(!res.ok) throw new Error("No se pudo leer " + path);
+  return await res.json();
+}
 
-    function rawUrl(path) {
-      return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
-    }
+function prettify(text){
+  return text.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+}
 
-    async function fetchContents(path) {
-      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`No se pudo leer: ${path}`);
-      return await res.json();
-    }
+function getProjectLink(cat, proj){
+  return `${location.pathname}?cat=${encodeURIComponent(cat)}&proyecto=${encodeURIComponent(proj)}`;
+}
 
-    function getProjectLink(category, project) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("cat", category);
-      url.searchParams.set("proyecto", project);
-      url.searchParams.delete("embed");
-      return url.toString();
-    }
+function getEmbedLink(cat, proj){
+  return `${location.pathname}?cat=${encodeURIComponent(cat)}&proyecto=${encodeURIComponent(proj)}&embed=1`;
+}
 
-    function getEmbedLink(category, project) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("cat", category);
-      url.searchParams.set("proyecto", project);
-      url.searchParams.set("embed", "1");
-      return url.toString();
-    }
+function blockInteractionArtifacts(viewer){
+  viewer.addEventListener("dragstart", e => e.preventDefault());
+  viewer.addEventListener("selectstart", e => e.preventDefault());
+  viewer.addEventListener("contextmenu", e => e.preventDefault());
 
-    function initTouchCompare(viewer, initialPercent = 50) {
-      const afterLayer = viewer.querySelector(".after-layer");
-      const divider = viewer.querySelector(".divider");
+  viewer.querySelectorAll("img").forEach(img => {
+    img.setAttribute("draggable", "false");
+    img.addEventListener("dragstart", e => e.preventDefault());
+  });
+}
 
-      function setPercent(percent) {
-        const safe = Math.max(0, Math.min(100, percent));
-        afterLayer.style.clipPath = `inset(0 0 0 ${safe}%)`;
-        divider.style.left = safe + "%";
-      }
+function initCompare(viewer){
+  const after = viewer.querySelector(".after-layer");
+  const divider = viewer.querySelector(".divider");
 
-      function updateFromClientX(clientX) {
-        const rect = viewer.getBoundingClientRect();
-        const x = clientX - rect.left;
-        const percent = (x / rect.width) * 100;
-        setPercent(percent);
-      }
+  function set(percent){
+    const safe = Math.max(0, Math.min(100, percent));
+    after.style.clipPath = `inset(0 0 0 ${safe}%)`;
+    divider.style.left = safe + "%";
+  }
 
-      let dragging = false;
+  function moveWithClientX(clientX){
+    const rect = viewer.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = (x / rect.width) * 100;
+    set(percent);
+  }
 
-      viewer.addEventListener("pointerdown", (e) => {
-        dragging = true;
-        updateFromClientX(e.clientX);
-        viewer.setPointerCapture(e.pointerId);
+  let dragging = false;
+
+  viewer.addEventListener("pointerdown", e => {
+    dragging = true;
+    viewer.setPointerCapture(e.pointerId);
+    moveWithClientX(e.clientX);
+    e.preventDefault();
+  });
+
+  viewer.addEventListener("pointermove", e => {
+    if(!dragging) return;
+    moveWithClientX(e.clientX);
+    e.preventDefault();
+  });
+
+  viewer.addEventListener("pointerup", e => {
+    dragging = false;
+    e.preventDefault();
+  });
+
+  viewer.addEventListener("pointercancel", () => {
+    dragging = false;
+  });
+
+  viewer.addEventListener("mousedown", e => e.preventDefault());
+  viewer.addEventListener("click", e => e.preventDefault());
+
+  blockInteractionArtifacts(viewer);
+  set(50);
+}
+
+function createCard(cat, proj, before, after, cleanMode = false){
+  const card = document.createElement("div");
+  card.className = "card";
+
+  if(cleanMode){
+    card.innerHTML = `
+      <div class="viewer">
+        <div class="before-layer"><img src="${before}" alt="Antes"></div>
+        <div class="after-layer"><img src="${after}" alt="Después"></div>
+        <div class="divider"><div class="handle">↔</div></div>
+        <div class="label before">Antes</div>
+        <div class="label after">Después</div>
+      </div>
+    `;
+  } else {
+    card.innerHTML = `
+      <div class="viewer">
+        <div class="before-layer"><img src="${before}" alt="Antes de ${proj}"></div>
+        <div class="after-layer"><img src="${after}" alt="Después de ${proj}"></div>
+        <div class="divider"><div class="handle">↔</div></div>
+        <div class="label before">Antes</div>
+        <div class="label after">Después</div>
+      </div>
+
+      <div class="content">
+        <div class="project-title">${prettify(proj)}</div>
+        <div class="actions">
+          <a class="btn primary" href="${getProjectLink(cat, proj)}">Ver comparativo</a>
+          <a class="btn" href="${getEmbedLink(cat, proj)}" target="_blank">Link incrustar</a>
+        </div>
+      </div>
+    `;
+  }
+
+  initCompare(card.querySelector(".viewer"));
+  return card;
+}
+
+function renderFilters(categories){
+  const valid = categories.filter(c => c.projects.length > 0);
+
+  if(!valid.length){
+    filtersEl.innerHTML = "";
+    return;
+  }
+
+  filtersEl.innerHTML = `
+    <a class="chip" href="#top">Todos</a>
+    ${valid.map(c => `<a class="chip" href="#cat-${c.name}">${prettify(c.name)}</a>`).join("")}
+  `;
+}
+
+async function getAllProjects(){
+  const root = await fetchDir(ROOT);
+  const cats = root.filter(item => item.type === "dir");
+  const data = [];
+
+  for(const c of cats){
+    const projectFolders = await fetchDir(`${ROOT}/${c.name}`);
+    const dirs = projectFolders.filter(item => item.type === "dir");
+
+    const category = {
+      name: c.name,
+      projects: []
+    };
+
+    for(const p of dirs){
+      const files = await fetchDir(`${ROOT}/${c.name}/${p.name}`);
+      const imgs = files
+        .filter(f => /\.(jpg|jpeg|png|webp|avif)$/i.test(f.name))
+        .sort((a,b) => a.name.localeCompare(b.name, "es", { numeric:true, sensitivity:"base" }));
+
+      if(imgs.length < 2) continue;
+
+      category.projects.push({
+        name: p.name,
+        before: raw(imgs[0].path),
+        after: raw(imgs[1].path)
       });
-
-      viewer.addEventListener("pointermove", (e) => {
-        if (!dragging) return;
-        updateFromClientX(e.clientX);
-      });
-
-      viewer.addEventListener("pointerup", () => {
-        dragging = false;
-      });
-
-      viewer.addEventListener("pointercancel", () => {
-        dragging = false;
-      });
-
-      setPercent(initialPercent);
     }
 
-    function createCard(categoryName, projectName, beforeSrc, afterSrc, projectPath, options = {}) {
-      const { single = false, embed = false } = options;
-      const card = document.createElement("article");
-      card.className = embed ? "card embed-card" : "card";
+    data.push(category);
+  }
 
-      const projectLink = getProjectLink(categoryName, projectName);
-      const embedLink = getEmbedLink(categoryName, projectName);
+  return data;
+}
 
-      if (embed) {
-        card.innerHTML = `
-          <div class="viewer">
-            <div class="before-layer">
-              <img src="${beforeSrc}" alt="Antes de ${projectName}" loading="lazy">
-            </div>
+async function load(){
+  try{
+    const params = new URLSearchParams(location.search);
+    const cat = params.get("cat");
+    const proj = params.get("proyecto");
+    const embed = params.get("embed") === "1";
 
-            <div class="after-layer">
-              <img src="${afterSrc}" alt="Después de ${projectName}" loading="lazy">
-            </div>
+    const singleMode = Boolean(cat && proj);
 
-            <div class="divider">
-              <div class="handle">↔</div>
-            </div>
-
-            <div class="label before">Antes</div>
-            <div class="label after">Después</div>
-          </div>
-        `;
-      } else {
-        card.innerHTML = `
-          <div class="viewer">
-            <div class="before-layer">
-              <img src="${beforeSrc}" alt="Antes de ${projectName}" loading="lazy">
-            </div>
-
-            <div class="after-layer">
-              <img src="${afterSrc}" alt="Después de ${projectName}" loading="lazy">
-            </div>
-
-            <div class="divider">
-              <div class="handle">↔</div>
-            </div>
-
-            <div class="label before">Antes</div>
-            <div class="label after">Después</div>
-          </div>
-
-          <div class="content">
-            <h3 class="project-title">${prettifyName(projectName)}</h3>
-            <p class="project-meta">${prettifyName(categoryName)} · ${projectPath}</p>
-
-            <div class="actions">
-              ${
-                single
-                  ? `<a class="btn primary" href="${window.location.pathname}">← Volver al portafolio</a>`
-                  : `<a class="btn primary" href="${projectLink}">Ver comparativo</a>`
-              }
-              <a class="btn" href="${embedLink}" target="_blank">Link incrustar</a>
-              <a class="btn" href="${beforeSrc}" target="_blank">Link imagen 1</a>
-              <a class="btn" href="${afterSrc}" target="_blank">Link imagen 2</a>
-            </div>
-          </div>
-        `;
-      }
-
-      initTouchCompare(card.querySelector(".viewer"), 50);
-      return card;
+    if(singleMode){
+      document.body.classList.add("single-mode");
     }
 
-    async function getAllProjects() {
-      const rootItems = await fetchContents(ROOT_FOLDER);
-      const categories = rootItems.filter(item => item.type === "dir");
+    const categories = await getAllProjects();
+    const total = categories.reduce((sum, c) => sum + c.projects.length, 0);
 
-      const data = [];
-
-      for (const category of categories) {
-        const categoryPath = `${ROOT_FOLDER}/${category.name}`;
-        const categoryItems = await fetchContents(categoryPath);
-        const projectFolders = categoryItems.filter(item => item.type === "dir");
-
-        const categoryData = {
-          name: category.name,
-          projects: []
-        };
-
-        for (const project of projectFolders) {
-          const projectPath = `${categoryPath}/${project.name}`;
-          const files = await fetchContents(projectPath);
-
-          const imageFiles = files
-            .filter(file => file.type === "file" && isImage(file.name))
-            .sort((a, b) => a.name.localeCompare(b.name, "es", { numeric: true, sensitivity: "base" }));
-
-          if (imageFiles.length < 2) continue;
-
-          categoryData.projects.push({
-            name: project.name,
-            path: `${category.name}/${project.name}`,
-            beforeSrc: rawUrl(imageFiles[0].path),
-            afterSrc: rawUrl(imageFiles[1].path)
-          });
-        }
-
-        data.push(categoryData);
-      }
-
-      return data;
+    if(!total){
+      statusEl.className = "status error";
+      statusEl.textContent = "No se encontraron proyectos válidos.";
+      return;
     }
 
-    function renderFilters(categories) {
-      const validCategories = categories.filter(c => c.projects.length > 0);
+    if(cat && proj){
+      const category = categories.find(c => c.name === cat);
+      const project = category?.projects.find(p => p.name === proj);
 
-      if (!validCategories.length) {
-        filtersEl.style.display = "none";
-        filtersEl.innerHTML = "";
+      if(!project){
+        statusEl.className = "status error";
+        statusEl.textContent = "No se encontró el proyecto solicitado.";
         return;
       }
 
-      filtersEl.style.display = "flex";
-      filtersEl.innerHTML = `
-        <a class="chip" href="#top">Todos</a>
-        ${validCategories.map(c => `
-          <a class="chip" href="#cat-${c.name}">${prettifyName(c.name)}</a>
-        `).join("")}
-      `;
-    }
+      const section = document.createElement("div");
+      section.className = "category-block";
 
-    function renderTopbarSingle(category, project) {
-      topbarEl.style.display = "flex";
-      topbarEl.innerHTML = `
-        <a class="back-link" href="${window.location.pathname}">← Volver al portafolio</a>
-        <div>${prettifyName(category)} / ${prettifyName(project)}</div>
-      `;
-    }
+      section.appendChild(createCard(cat, proj, project.before, project.after, true));
+      app.appendChild(section);
 
-    async function loadProjects() {
-      try {
-        app.innerHTML = "";
-        topbarEl.style.display = "none";
-        topbarEl.innerHTML = "";
-        filtersEl.style.display = "none";
-        filtersEl.innerHTML = "";
-
-        const params = new URLSearchParams(window.location.search);
-        const selectedCategory = params.get("cat");
-        const selectedProject = params.get("proyecto");
-        const embedMode = params.get("embed") === "1";
-
-        if (embedMode) {
-          document.body.classList.add("embed-mode");
-        }
-
-        setStatus("Cargando categorías y proyectos...");
-
-        const categories = await getAllProjects();
-        const totalProjects = categories.reduce((sum, c) => sum + c.projects.length, 0);
-
-        if (!categories.length || totalProjects === 0) {
-          setStatus(
-            `No se encontraron proyectos válidos. Cada carpeta interna debe tener al menos <strong>2 imágenes</strong>.`,
-            "error"
-          );
-          return;
-        }
-
-        if (selectedCategory && selectedProject) {
-          const category = categories.find(c => c.name === selectedCategory);
-          const project = category?.projects.find(p => p.name === selectedProject);
-
-          if (!category || !project) {
-            setStatus("No se encontró el proyecto solicitado.", "error");
-            return;
-          }
-
-          if (embedMode) {
-            const wrap = document.createElement("section");
-            wrap.className = "embed-wrap";
-
-            wrap.appendChild(
-              createCard(
-                category.name,
-                project.name,
-                project.beforeSrc,
-                project.afterSrc,
-                project.path,
-                { embed: true }
-              )
-            );
-
-            app.appendChild(wrap);
-            return;
-          }
-
-          renderTopbarSingle(category.name, project.name);
-
-          const wrap = document.createElement("section");
-          wrap.className = "single-view";
-
-          wrap.appendChild(
-            createCard(
-              category.name,
-              project.name,
-              project.beforeSrc,
-              project.afterSrc,
-              project.path,
-              { single: true }
-            )
-          );
-
-          app.appendChild(wrap);
-          setStatus("Link individual cargado correctamente.", "ok");
-          return;
-        }
-
-        renderFilters(categories);
-
-        let shownCategories = 0;
-
-        for (const category of categories) {
-          const section = document.createElement("section");
-          section.className = "category-block";
-          section.id = `cat-${category.name}`;
-
-          const head = document.createElement("div");
-          head.className = "category-head";
-
-          const title = document.createElement("h2");
-          title.className = "category-title";
-          title.textContent = prettifyName(category.name);
-
-          const badge = document.createElement("div");
-          badge.className = "category-badge";
-          badge.textContent = `${category.projects.length} proyecto${category.projects.length === 1 ? "" : "s"}`;
-
-          head.appendChild(title);
-          head.appendChild(badge);
-          section.appendChild(head);
-
-          if (!category.projects.length) {
-            const empty = document.createElement("div");
-            empty.className = "empty";
-            empty.textContent = "No se encontraron proyectos válidos en esta categoría.";
-            section.appendChild(empty);
-          } else {
-            const grid = document.createElement("div");
-            grid.className = "grid";
-
-            for (const project of category.projects) {
-              grid.appendChild(
-                createCard(
-                  category.name,
-                  project.name,
-                  project.beforeSrc,
-                  project.afterSrc,
-                  project.path
-                )
-              );
-            }
-
-            section.appendChild(grid);
-            shownCategories++;
-          }
-
-          app.appendChild(section);
-        }
-
-        setStatus(
-          `Se cargaron correctamente <strong>${totalProjects}</strong> proyecto(s) en <strong>${shownCategories}</strong> categoría(s).`,
-          "ok"
-        );
-      } catch (error) {
-        console.error(error);
-        setStatus(
-          `Error al cargar los proyectos.<br>
-          Revisa que exista la carpeta <strong>${ROOT_FOLDER}</strong>, que el repositorio sea público y que GitHub Pages esté activo.`,
-          "error"
-        );
+      if(embed || singleMode){
+        statusEl.style.display = "none";
+      } else {
+        statusEl.className = "status ok";
+        statusEl.textContent = "Comparativo cargado correctamente.";
       }
+
+      return;
     }
 
-    loadProjects();
-  </script>
+    renderFilters(categories);
+
+    for(const c of categories){
+      if(!c.projects.length) continue;
+
+      const section = document.createElement("div");
+      section.className = "category-block";
+      section.id = `cat-${c.name}`;
+
+      const title = document.createElement("div");
+      title.className = "category-title";
+      title.textContent = prettify(c.name);
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      for(const p of c.projects){
+        grid.appendChild(createCard(c.name, p.name, p.before, p.after, false));
+      }
+
+      section.appendChild(title);
+      section.appendChild(grid);
+      app.appendChild(section);
+    }
+
+    statusEl.className = "status ok";
+    statusEl.textContent = "Proyectos cargados correctamente.";
+  } catch(error){
+    console.error(error);
+    statusEl.className = "status error";
+    statusEl.textContent = "Error al cargar los proyectos.";
+  }
+}
+
+load();
+</script>
 </body>
 </html>
