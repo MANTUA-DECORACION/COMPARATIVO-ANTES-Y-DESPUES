@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Comparativos Antes y Después de proyectos de Mantua Decoración.">
 <title>Comparativos Antes y Después | Mantua Decoración</title>
-
 <style>
 :root{
   --bg:#f7f7f8;
@@ -14,48 +14,19 @@
   --line:#e5e7eb;
   --accent:#9f1239;
   --shadow:0 10px 30px rgba(0,0,0,.08);
-  --radius:22px;
 }
-
-*{
-  box-sizing:border-box;
-}
-
-html, body{
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:var(--bg);
   color:var(--text);
 }
-
-.wrap{
-  width:min(1280px, 92%);
-  margin:auto;
-}
-
-header{
-  text-align:center;
-  padding:40px 0 20px;
-}
-
-h1{
-  margin:0;
-  font-size:clamp(2rem,4vw,3rem);
-}
-
-.sub{
-  color:var(--muted);
-  margin-top:10px;
-}
-
+.wrap{width:min(1280px,92%);margin:auto}
+header{text-align:center;padding:40px 0 20px}
+h1{margin:0;font-size:clamp(2rem,4vw,3rem)}
+.sub{color:var(--muted);margin-top:10px}
 .status{
   margin:20px 0;
   padding:16px;
@@ -63,26 +34,9 @@ h1{
   background:#fff;
   border:1px solid var(--line);
 }
-
-.status.ok{
-  background:#f0fdf4;
-  border-color:#bbf7d0;
-  color:#166534;
-}
-
-.status.error{
-  background:#fef2f2;
-  border-color:#fecaca;
-  color:#991b1b;
-}
-
-.filters{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:25px;
-}
-
+.status.ok{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+.status.error{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
 .chip{
   padding:8px 14px;
   border-radius:999px;
@@ -92,23 +46,17 @@ h1{
   font-weight:700;
   color:var(--text);
 }
-
-.category-block{
-  margin:40px 0;
-}
-
+.category-block{margin:40px 0}
 .category-title{
   font-size:1.6rem;
   margin-bottom:15px;
   text-transform:capitalize;
 }
-
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
   gap:22px;
 }
-
 .card{
   background:#fff;
   border:1px solid var(--line);
@@ -116,30 +64,25 @@ h1{
   overflow:hidden;
   box-shadow:var(--shadow);
 }
-
 .viewer{
   position:relative;
   width:100%;
   aspect-ratio:16/10;
   overflow:hidden;
-  background:#e5e7eb;
+  background:#e7e7e7;
   cursor:ew-resize;
-  touch-action:none;
+  touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
   -webkit-touch-callout:none;
+  isolation:isolate;
 }
-
-.before-layer,
-.after-layer{
+.before-layer,.after-layer{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
 }
-
 .viewer img{
   position:absolute;
   inset:0;
@@ -149,17 +92,17 @@ h1{
   pointer-events:none;
   user-select:none;
   -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
   -webkit-user-drag:none;
   -webkit-touch-callout:none;
+  opacity:0;
+  transition:opacity .18s ease;
 }
-
+.viewer img.is-loaded{opacity:1}
 .after-layer{
   z-index:2;
   clip-path:inset(0 0 0 50%);
+  will-change:clip-path;
 }
-
 .divider{
   position:absolute;
   top:0;
@@ -168,67 +111,84 @@ h1{
   width:0;
   pointer-events:none;
   z-index:4;
+  will-change:left;
 }
-
 .divider::before{
   content:"";
   position:absolute;
-  left:-1.5px;
+  left:-.5px;
   top:0;
   bottom:0;
-  width:3px;
-  background:#fff;
-  box-shadow:0 0 10px rgba(0,0,0,.22);
+  width:1px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 0 4px rgba(0,0,0,.28);
 }
-
 .handle{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:#fff;
+  width:48px;
+  height:36px;
+  border-radius:999px;
   display:grid;
   place-items:center;
-  font-size:22px;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-  color:#111827;
-  font-weight:700;
+  color:rgba(17,24,39,.92);
+  background:rgba(255,255,255,.34);
+  border:1px solid rgba(255,255,255,.68);
+  box-shadow:0 5px 16px rgba(0,0,0,.16);
+  -webkit-backdrop-filter:blur(10px) saturate(130%);
+  backdrop-filter:blur(10px) saturate(130%);
 }
-
+.handle svg{
+  width:29px;
+  height:16px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 1px 1px rgba(255,255,255,.5));
+}
 .label{
   position:absolute;
   top:12px;
   padding:6px 10px;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,.68);
   color:#fff;
+  border:1px solid rgba(255,255,255,.10);
   border-radius:20px;
   font-size:.8rem;
   z-index:5;
   pointer-events:none;
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
 }
-
-.label.before{ left:12px; }
-.label.after{ right:12px; }
-
-.content{
-  padding:16px;
+.label.before{left:12px}
+.label.after{right:12px}
+.loading-note{
+  position:absolute;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  z-index:6;
+  padding:5px 9px;
+  border-radius:999px;
+  background:rgba(0,0,0,.45);
+  color:#fff;
+  font-size:.72rem;
+  pointer-events:none;
+  opacity:1;
+  transition:opacity .18s ease;
 }
-
-.project-title{
-  font-weight:700;
-  margin-bottom:10px;
-  text-transform:capitalize;
+.viewer.is-ready .loading-note{opacity:0}
+.viewer.has-error .loading-note{
+  opacity:1;
+  background:rgba(127,29,29,.78);
 }
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
+.content{padding:16px}
+.project-title{font-weight:700;margin-bottom:10px;text-transform:capitalize}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
 .btn{
   padding:8px 14px;
   border-radius:10px;
@@ -238,39 +198,15 @@ h1{
   font-weight:700;
   color:#111;
 }
-
-.btn.primary{
-  background:var(--accent);
-  color:#fff;
-  border-color:var(--accent);
-}
-
-/* Vista individual limpia */
-body.single-mode{
-  background:#fff;
-}
-
-body.single-mode .wrap{
-  width:100%;
-  max-width:100%;
-  margin:0;
-}
-
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+body.single-mode{background:#fff;overflow:hidden}
+body.single-mode .wrap{width:100%;max-width:100%;margin:0}
 body.single-mode header,
 body.single-mode .filters,
 body.single-mode .status,
-body.single-mode .content{
-  display:none !important;
-}
-
-body.single-mode .category-title{
-  display:none !important;
-}
-
-body.single-mode .category-block{
-  margin:0;
-}
-
+body.single-mode .content,
+body.single-mode .category-title{display:none!important}
+body.single-mode .category-block{margin:0}
 body.single-mode .card{
   border:none;
   border-radius:0;
@@ -278,7 +214,6 @@ body.single-mode .card{
   overflow:hidden;
   background:transparent;
 }
-
 body.single-mode .viewer{
   width:100%;
   height:100vh;
@@ -287,299 +222,345 @@ body.single-mode .viewer{
   aspect-ratio:auto;
   border-radius:0;
 }
-
-@media (max-width:700px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .handle{
-    width:48px;
-    height:48px;
-  }
-
-  body.single-mode .viewer{
-    height:100svh;
-  }
+@supports(height:100svh){
+  body.single-mode .viewer{height:100svh}
+}
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr}
+  .handle{width:44px;height:34px}
+  .handle svg{width:27px}
+}
+@media(prefers-reduced-motion:reduce){
+  .viewer img,.loading-note{transition:none}
 }
 </style>
 </head>
-
 <body>
 <div class="wrap">
-
-<header>
-  <h1 id="top">Comparativos Antes y Después</h1>
-  <p class="sub">Portafolio visual organizado automáticamente por producto.</p>
-</header>
-
-<div id="status" class="status">Cargando proyectos...</div>
-<div id="filters" class="filters"></div>
-<main id="app"></main>
-
+  <header>
+    <h1 id="top">Comparativos Antes y Después</h1>
+    <p class="sub">Portafolio visual organizado por producto.</p>
+  </header>
+  <div id="status" class="status">Preparando proyectos…</div>
+  <div id="filters" class="filters"></div>
+  <main id="app"></main>
 </div>
 
+<script id="project-catalog" type="application/json">
+[
+  {
+    "name":"follaje",
+    "projects":[
+      {
+        "name":"follaje 1",
+        "before":"proyectos/follaje/follaje 1/antes follaje 1.jpg",
+        "after":"proyectos/follaje/follaje 1/despues folaje 1.jpg"
+      }
+    ]
+  },
+  {
+    "name":"lambrin wpc",
+    "projects":[
+      {
+        "name":"lambrin1",
+        "before":"proyectos/lambrin wpc/lambrin1/antes lambrin 1.jpg",
+        "after":"proyectos/lambrin wpc/lambrin1/despues lambrin 1.jpg"
+      }
+    ]
+  },
+  {
+    "name":"pasto-sintetico",
+    "projects":[
+      {
+        "name":"pasto1",
+        "before":"proyectos/pasto-sintetico/pasto1/antes pasto 1.jpg",
+        "after":"proyectos/pasto-sintetico/pasto1/despues pasto 1.jpg"
+      },
+      {
+        "name":"pasto2",
+        "before":"proyectos/pasto-sintetico/pasto2/antes pasto 2.jpg",
+        "after":"proyectos/pasto-sintetico/pasto2/despues pasto 2.jpg"
+      }
+    ]
+  },
+  {
+    "name":"persianas",
+    "projects":[
+      {
+        "name":"persiana1",
+        "before":"proyectos/persianas/persiana1/antes.jpg",
+        "after":"proyectos/persianas/persiana1/despues.jpg"
+      },
+      {
+        "name":"persiana2",
+        "before":"proyectos/persianas/persiana2/1.jpg",
+        "after":"proyectos/persianas/persiana2/2.jpg"
+      }
+    ]
+  }
+]
+</script>
+
 <script>
-const USER = "MANTUA-DECORACION";
-const REPO = "COMPARATIVO-ANTES-Y-DESPUES";
-const BRANCH = "main";
-const ROOT = "proyectos";
+'use strict';
 
-const statusEl = document.getElementById("status");
-const filtersEl = document.getElementById("filters");
-const app = document.getElementById("app");
+const statusEl=document.getElementById('status');
+const filtersEl=document.getElementById('filters');
+const app=document.getElementById('app');
+const catalogNode=document.getElementById('project-catalog');
 
-function raw(path){
-  return `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/${path}`;
+function parseCatalog(){
+  try{
+    const value=JSON.parse(catalogNode.textContent);
+    if(!Array.isArray(value)) throw new Error('Catálogo inválido');
+    return value.filter(category=>
+      category &&
+      typeof category.name==='string' &&
+      Array.isArray(category.projects) &&
+      category.projects.length
+    );
+  }catch(error){
+    console.error(error);
+    return [];
+  }
 }
 
-async function fetchDir(path){
-  const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${path}?ref=${BRANCH}`);
-  if(!res.ok) throw new Error("No se pudo leer " + path);
-  return await res.json();
+function asset(path){
+  return new URL(path.split('/').map(encodeURIComponent).join('/'),document.baseURI).href;
 }
 
 function prettify(text){
-  return text.replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  return String(text).replace(/[-_]/g,' ').replace(/\b\w/g,letter=>letter.toUpperCase());
 }
 
-function getProjectLink(cat, proj){
-  return `${location.pathname}?cat=${encodeURIComponent(cat)}&proyecto=${encodeURIComponent(proj)}`;
-}
-
-function getEmbedLink(cat, proj){
-  return `${location.pathname}?cat=${encodeURIComponent(cat)}&proyecto=${encodeURIComponent(proj)}&embed=1`;
+function makeLink(cat,proj,embed=false){
+  const url=new URL(location.href);
+  url.hash='';
+  url.search='';
+  url.searchParams.set('cat',cat);
+  url.searchParams.set('proyecto',proj);
+  if(embed) url.searchParams.set('embed','1');
+  return url.href;
 }
 
 function blockInteractionArtifacts(viewer){
-  viewer.addEventListener("dragstart", e => e.preventDefault());
-  viewer.addEventListener("selectstart", e => e.preventDefault());
-  viewer.addEventListener("contextmenu", e => e.preventDefault());
-
-  viewer.querySelectorAll("img").forEach(img => {
-    img.setAttribute("draggable", "false");
-    img.addEventListener("dragstart", e => e.preventDefault());
-  });
+  viewer.addEventListener('dragstart',event=>event.preventDefault());
+  viewer.addEventListener('selectstart',event=>event.preventDefault());
+  viewer.addEventListener('contextmenu',event=>event.preventDefault());
 }
 
 function initCompare(viewer){
-  const after = viewer.querySelector(".after-layer");
-  const divider = viewer.querySelector(".divider");
+  const after=viewer.querySelector('.after-layer');
+  const divider=viewer.querySelector('.divider');
+  let dragging=false;
+  let frame=0;
+  let pendingPercent=50;
+
+  function apply(){
+    frame=0;
+    const safe=Math.max(0,Math.min(100,pendingPercent));
+    after.style.clipPath=`inset(0 0 0 ${safe}%)`;
+    divider.style.left=`${safe}%`;
+  }
 
   function set(percent){
-    const safe = Math.max(0, Math.min(100, percent));
-    after.style.clipPath = `inset(0 0 0 ${safe}%)`;
-    divider.style.left = safe + "%";
+    pendingPercent=percent;
+    if(!frame) frame=requestAnimationFrame(apply);
   }
 
-  function moveWithClientX(clientX){
-    const rect = viewer.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percent = (x / rect.width) * 100;
-    set(percent);
+  function move(clientX){
+    const rect=viewer.getBoundingClientRect();
+    if(!(rect.width>0)) return;
+    set(((clientX-rect.left)/rect.width)*100);
   }
 
-  let dragging = false;
-
-  viewer.addEventListener("pointerdown", e => {
-    dragging = true;
-    viewer.setPointerCapture(e.pointerId);
-    moveWithClientX(e.clientX);
-    e.preventDefault();
+  viewer.addEventListener('pointerdown',event=>{
+    dragging=true;
+    try{viewer.setPointerCapture(event.pointerId)}catch{}
+    move(event.clientX);
+    event.preventDefault();
   });
 
-  viewer.addEventListener("pointermove", e => {
+  viewer.addEventListener('pointermove',event=>{
     if(!dragging) return;
-    moveWithClientX(e.clientX);
-    e.preventDefault();
+    move(event.clientX);
+    if(event.pointerType!=='touch') event.preventDefault();
   });
 
-  viewer.addEventListener("pointerup", e => {
-    dragging = false;
-    e.preventDefault();
-  });
+  const stop=event=>{
+    dragging=false;
+    if(event && viewer.hasPointerCapture?.(event.pointerId)){
+      try{viewer.releasePointerCapture(event.pointerId)}catch{}
+    }
+  };
 
-  viewer.addEventListener("pointercancel", () => {
-    dragging = false;
-  });
-
-  viewer.addEventListener("mousedown", e => e.preventDefault());
-  viewer.addEventListener("click", e => e.preventDefault());
+  viewer.addEventListener('pointerup',stop);
+  viewer.addEventListener('pointercancel',stop);
+  viewer.addEventListener('lostpointercapture',()=>{dragging=false});
+  viewer.addEventListener('click',event=>event.preventDefault());
 
   blockInteractionArtifacts(viewer);
-  set(50);
+  apply();
 }
 
-function createCard(cat, proj, before, after, cleanMode = false){
-  const card = document.createElement("div");
-  card.className = "card";
+function configureImages(viewer,eager){
+  const images=[...viewer.querySelectorAll('img')];
+  let loaded=0;
+  let failed=0;
 
-  if(cleanMode){
-    card.innerHTML = `
-      <div class="viewer">
-        <div class="before-layer"><img src="${before}" alt="Antes"></div>
-        <div class="after-layer"><img src="${after}" alt="Después"></div>
-        <div class="divider"><div class="handle">↔</div></div>
-        <div class="label before">Antes</div>
-        <div class="label after">Después</div>
-      </div>
-    `;
-  } else {
-    card.innerHTML = `
-      <div class="viewer">
-        <div class="before-layer"><img src="${before}" alt="Antes de ${proj}"></div>
-        <div class="after-layer"><img src="${after}" alt="Después de ${proj}"></div>
-        <div class="divider"><div class="handle">↔</div></div>
-        <div class="label before">Antes</div>
-        <div class="label after">Después</div>
-      </div>
+  const finish=()=>{
+    loaded+=1;
+    if(loaded===images.length){
+      viewer.classList.add('is-ready');
+      viewer.classList.toggle('has-error',failed>0);
+      const note=viewer.querySelector('.loading-note');
+      if(note && failed) note.textContent='No se pudo cargar una imagen';
+    }
+  };
 
+  images.forEach(img=>{
+    img.loading=eager?'eager':'lazy';
+    img.decoding='async';
+    img.draggable=false;
+    if(eager) img.fetchPriority='high';
+
+    const success=()=>{
+      img.classList.add('is-loaded');
+      finish();
+    };
+    const error=()=>{
+      failed+=1;
+      finish();
+    };
+
+    if(img.complete){
+      if(img.naturalWidth) success();
+      else error();
+    }else{
+      img.addEventListener('load',success,{once:true});
+      img.addEventListener('error',error,{once:true});
+    }
+  });
+}
+
+function handleMarkup(){
+  return `<div class="handle" aria-hidden="true">
+    <svg viewBox="0 0 32 16" focusable="false" aria-hidden="true">
+      <path d="M11 3 6 8l5 5M21 3l5 5-5 5"/>
+    </svg>
+  </div>`;
+}
+
+function createCard(category,project,cleanMode=false){
+  const card=document.createElement('div');
+  card.className='card';
+  const before=asset(project.before);
+  const after=asset(project.after);
+  const beforeAlt=cleanMode?'Antes':`Antes de ${project.name}`;
+  const afterAlt=cleanMode?'Después':`Después de ${project.name}`;
+
+  card.innerHTML=`
+    <div class="viewer" aria-label="Comparador Antes y Después">
+      <div class="before-layer"><img src="${before}" alt="${beforeAlt}"></div>
+      <div class="after-layer"><img src="${after}" alt="${afterAlt}"></div>
+      <div class="divider">${handleMarkup()}</div>
+      <div class="label before">Antes</div>
+      <div class="label after">Después</div>
+      <div class="loading-note" role="status">Cargando imágenes…</div>
+    </div>
+    ${cleanMode?'':`
       <div class="content">
-        <div class="project-title">${prettify(proj)}</div>
+        <div class="project-title">${prettify(project.name)}</div>
         <div class="actions">
-          <a class="btn primary" href="${getProjectLink(cat, proj)}">Ver comparativo</a>
-          <a class="btn" href="${getEmbedLink(cat, proj)}" target="_blank">Link incrustar</a>
+          <a class="btn primary" href="${makeLink(category.name,project.name)}">Ver comparativo</a>
+          <a class="btn" href="${makeLink(category.name,project.name,true)}" target="_blank" rel="noopener">Link incrustar</a>
         </div>
       </div>
-    `;
-  }
+    `}
+  `;
 
-  initCompare(card.querySelector(".viewer"));
+  const viewer=card.querySelector('.viewer');
+  initCompare(viewer);
+  configureImages(viewer,cleanMode);
   return card;
 }
 
 function renderFilters(categories){
-  const valid = categories.filter(c => c.projects.length > 0);
-
-  if(!valid.length){
-    filtersEl.innerHTML = "";
-    return;
-  }
-
-  filtersEl.innerHTML = `
+  filtersEl.innerHTML=`
     <a class="chip" href="#top">Todos</a>
-    ${valid.map(c => `<a class="chip" href="#cat-${c.name}">${prettify(c.name)}</a>`).join("")}
+    ${categories.map(category=>
+      `<a class="chip" href="#cat-${encodeURIComponent(category.name)}">${prettify(category.name)}</a>`
+    ).join('')}
   `;
 }
 
-async function getAllProjects(){
-  const root = await fetchDir(ROOT);
-  const cats = root.filter(item => item.type === "dir");
-  const data = [];
-
-  for(const c of cats){
-    const projectFolders = await fetchDir(`${ROOT}/${c.name}`);
-    const dirs = projectFolders.filter(item => item.type === "dir");
-
-    const category = {
-      name: c.name,
-      projects: []
-    };
-
-    for(const p of dirs){
-      const files = await fetchDir(`${ROOT}/${c.name}/${p.name}`);
-      const imgs = files
-        .filter(f => /\.(jpg|jpeg|png|webp|avif)$/i.test(f.name))
-        .sort((a,b) => a.name.localeCompare(b.name, "es", { numeric:true, sensitivity:"base" }));
-
-      if(imgs.length < 2) continue;
-
-      category.projects.push({
-        name: p.name,
-        before: raw(imgs[0].path),
-        after: raw(imgs[1].path)
-      });
-    }
-
-    data.push(category);
-  }
-
-  return data;
+function findProject(categories,cat,proj){
+  const category=categories.find(item=>item.name===cat);
+  const project=category?.projects.find(item=>item.name===proj);
+  return category&&project?{category,project}:null;
 }
 
-async function load(){
-  try{
-    const params = new URLSearchParams(location.search);
-    const cat = params.get("cat");
-    const proj = params.get("proyecto");
-    const embed = params.get("embed") === "1";
+function render(){
+  const categories=parseCatalog();
+  const total=categories.reduce((sum,category)=>sum+category.projects.length,0);
 
-    const singleMode = Boolean(cat && proj);
-
-    if(singleMode){
-      document.body.classList.add("single-mode");
-    }
-
-    const categories = await getAllProjects();
-    const total = categories.reduce((sum, c) => sum + c.projects.length, 0);
-
-    if(!total){
-      statusEl.className = "status error";
-      statusEl.textContent = "No se encontraron proyectos válidos.";
-      return;
-    }
-
-    if(cat && proj){
-      const category = categories.find(c => c.name === cat);
-      const project = category?.projects.find(p => p.name === proj);
-
-      if(!project){
-        statusEl.className = "status error";
-        statusEl.textContent = "No se encontró el proyecto solicitado.";
-        return;
-      }
-
-      const section = document.createElement("div");
-      section.className = "category-block";
-
-      section.appendChild(createCard(cat, proj, project.before, project.after, true));
-      app.appendChild(section);
-
-      if(embed || singleMode){
-        statusEl.style.display = "none";
-      } else {
-        statusEl.className = "status ok";
-        statusEl.textContent = "Comparativo cargado correctamente.";
-      }
-
-      return;
-    }
-
-    renderFilters(categories);
-
-    for(const c of categories){
-      if(!c.projects.length) continue;
-
-      const section = document.createElement("div");
-      section.className = "category-block";
-      section.id = `cat-${c.name}`;
-
-      const title = document.createElement("div");
-      title.className = "category-title";
-      title.textContent = prettify(c.name);
-
-      const grid = document.createElement("div");
-      grid.className = "grid";
-
-      for(const p of c.projects){
-        grid.appendChild(createCard(c.name, p.name, p.before, p.after, false));
-      }
-
-      section.appendChild(title);
-      section.appendChild(grid);
-      app.appendChild(section);
-    }
-
-    statusEl.className = "status ok";
-    statusEl.textContent = "Proyectos cargados correctamente.";
-  } catch(error){
-    console.error(error);
-    statusEl.className = "status error";
-    statusEl.textContent = "Error al cargar los proyectos.";
+  if(!total){
+    statusEl.className='status error';
+    statusEl.textContent='No se encontraron proyectos válidos.';
+    return;
   }
+
+  const params=new URLSearchParams(location.search);
+  const cat=params.get('cat');
+  const proj=params.get('proyecto');
+  const singleMode=Boolean(cat&&proj);
+
+  if(singleMode){
+    document.body.classList.add('single-mode');
+    const match=findProject(categories,cat,proj);
+    if(!match){
+      document.body.classList.remove('single-mode');
+      statusEl.className='status error';
+      statusEl.textContent='No se encontró el proyecto solicitado.';
+      return;
+    }
+    const section=document.createElement('div');
+    section.className='category-block';
+    section.appendChild(createCard(match.category,match.project,true));
+    app.replaceChildren(section);
+    statusEl.hidden=true;
+    return;
+  }
+
+  renderFilters(categories);
+  const fragment=document.createDocumentFragment();
+
+  for(const category of categories){
+    const section=document.createElement('section');
+    section.className='category-block';
+    section.id=`cat-${encodeURIComponent(category.name)}`;
+
+    const title=document.createElement('h2');
+    title.className='category-title';
+    title.textContent=prettify(category.name);
+
+    const grid=document.createElement('div');
+    grid.className='grid';
+
+    for(const project of category.projects){
+      grid.appendChild(createCard(category,project,false));
+    }
+
+    section.append(title,grid);
+    fragment.appendChild(section);
+  }
+
+  app.replaceChildren(fragment);
+  statusEl.className='status ok';
+  statusEl.textContent=`${total} comparativos disponibles.`;
 }
 
-load();
+render();
 </script>
 </body>
 </html>

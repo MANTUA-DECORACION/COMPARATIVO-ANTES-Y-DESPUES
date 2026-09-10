@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "comparativo-antes-despues",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "./dist"
+  }
+}
