@@ -17,6 +17,60 @@ CATALOG_RE = re.compile(
     re.DOTALL,
 )
 
+# Ajuste visual final del comparador publicado. Se inyecta en la salida para no
+# modificar la lógica de interacción ni el sistema de carga ya estable.
+ELEGANT_STYLE = """
+<style id="mantua-elegant-compare">
+/* Línea divisoria fina y discreta */
+.divider::before{
+  left:-.5px;
+  width:1px;
+  background:rgba(255,255,255,.72);
+  box-shadow:0 0 2px rgba(0,0,0,.16);
+}
+
+/* Control central redondo, ligero y traslúcido */
+.handle{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,.20);
+  border:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.14);
+  color:rgba(20,24,30,.72);
+  -webkit-backdrop-filter:blur(9px) saturate(115%);
+  backdrop-filter:blur(9px) saturate(115%);
+}
+.handle svg{
+  width:27px;
+  height:15px;
+  stroke:currentColor;
+  stroke-width:1.55;
+  filter:none;
+}
+
+/* Cápsulas Antes / Después con efecto vidrio, menos sólidas */
+.label{
+  padding:6px 11px;
+  background:rgba(18,18,18,.43);
+  border:0;
+  border-radius:999px;
+  color:rgba(255,255,255,.96);
+  box-shadow:0 2px 8px rgba(0,0,0,.10);
+  -webkit-backdrop-filter:blur(8px) saturate(115%);
+  backdrop-filter:blur(8px) saturate(115%);
+}
+
+@media(max-width:700px){
+  .handle{
+    width:40px;
+    height:40px;
+  }
+  .handle svg{width:25px}
+}
+</style>
+"""
+
 
 def natural_key(value: str):
     return [
@@ -109,6 +163,10 @@ def main() -> None:
     )
     if replacements != 1:
         raise SystemExit("No se encontró el bloque project-catalog en index.html.")
+
+    if "</head>" not in html:
+        raise SystemExit("No se encontró el cierre </head> en index.html.")
+    html = html.replace("</head>", f"{ELEGANT_STYLE}\n</head>", 1)
 
     (OUTPUT / "index.html").write_text(html, encoding="utf-8")
     shutil.copytree(PROJECTS, OUTPUT / "proyectos", ignore=shutil.ignore_patterns(".*"))
